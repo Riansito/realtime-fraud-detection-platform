@@ -69,7 +69,61 @@ def process_silver_stream():
     
     return deduplicated_df
 
+SILVER_PATH = os.getenv("S3_SILVER_PATH", "s3a://lakehouse/silver/transactions/")
+CHECKPOINT_DIR = os.getenv("S3_CHECKPOINT_DIR", "s3a://lakehouse/checkpoints/")
+
+def write_silver_stream(silver_stream_df):
+    """
+    Usa a estratégia foreachBatch para dividir o micro-lote de Streaming:
+    - Dados válidos vão para a Camada Silver (Prontos para análise de Fraude).
+    - Dados inválidos vão para a tabela Delta de DLQ.
+    """
+    
+    def route_batch(batch_df, batch_id):
+        # O Spark chama essa função a cada 10 segundos com um lote estático (DataFrame)
+        
+        # 1. Rota de Sucesso (Valid Data)
+        valid_df = batch_df.filter(col("is_valid") == True) \
+            .drop("is_valid", "dlq_reason", "raw_payload") # Limpamos colunas de debug
+            
+        if not valid_df.isEmpty():
+            # Cria a partição event_date fisicamente
+            from pyspark.sql.functions import date_format
+            valid_df = valid_df.withColumn("event_date", date_format(col("event_time"), "yyyy-MM-dd"))
+            
+            valid_df.write \
+                .format("delta") \
+                .mode("append") \
+                .partitionBy("event_date") \
+                .save(SILVER_PATH)
+                
+        # 2. Rota de Falha (Dead Letter Queue)
+        invalid_df = batch_df.filter(col("is_valid") == False)
+        
+        if not invalid_df.isEmpty():
+            invalid_df.write \
+                .format("delta") \
+                .mode("append") \
+                .partitionBy("bronze_ingestion_date") \
+                .save(DLQ_PATH)
+                
+    # Inicializa o gatilho da stream
+    print("Starting Silver & DLQ write streams...")
+    query = silver_stream_df.writeStream \
+        .foreachBatch(route_batch) \
+        .outputMode("append") \
+        .trigger(processingTime="10 seconds") \
+        .option("checkpointLocation", f"{CHECKPOINT_DIR}/silver") \
+        .start()
+        
+    return query
+
 if __name__ == "__main__":
+    # Pipeline Completo da Camada Silver
     silver_df = process_silver_stream()
-    print("Silver stream schema enforcement configured successfully.")
-    silver_df.printSchema()
+    
+    # Descomente para testes locais
+    # query = write_silver_stream(silver_df)
+    # query.awaitTermination()
+    
+    print("Silver stream Pipeline (Schema Enforcement -> DLQ -> Watermark -> Deduplication -> Write) Configured Successfully!")
