@@ -59,7 +59,11 @@ def process_silver_stream():
         .otherwise(lit(None))
     )
     
-    return validated_df
+    # Aplica Watermarking de 10 minutos baseado no horário do evento (event_time)
+    # Fundamental para limpar o estado (State) da memória na próxima etapa de Deduplicação
+    watermarked_df = validated_df.withWatermark("event_time", "10 minutes")
+    
+    return watermarked_df
 
 if __name__ == "__main__":
     silver_df = process_silver_stream()
