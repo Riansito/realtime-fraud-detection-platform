@@ -70,34 +70,34 @@ def process_silver_stream():
     # =========================================================================
     # ENGINE DE FRAUDE (FAST PATH)
     # =========================================================================
-    # Combinação de Heurísticas de Risco
+    # Cálculo Consolidado de Score (BACK-023)
     
-    # Extrai a hora do evento para a Heurística Noturna (BACK-020)
+    # Extrai a hora do evento para a Heurística Noturna
     risk_df = deduplicated_df.withColumn("event_hour", hour(col("event_time")))
     
-    # Categorias de alto risco (BACK-022)
+    # Categorias de alto risco
     suspicious_categories = ["crypto", "jewelry", "gambling"]
     
+    # Definição de Pesos Parciais (Weights)
+    base_risk = lit(0.05)
+    score_value = when(col("amount") > 5000, 0.40).otherwise(0.0)
+    score_time = when((col("event_hour") >= 0) & (col("event_hour") <= 5), 0.30).otherwise(0.0)
+    score_category = when(col("merchant_category").isin(suspicious_categories), 0.30).otherwise(0.0)
+    
+    # Soma dos Pesos
+    from pyspark.sql.functions import least
+    total_score = base_risk + score_value + score_time + score_category
+    
     risk_df = risk_df.withColumn(
+        "risk_score",
+        least(total_score, lit(1.0)) # Limita o score máximo a 1.0 (100%)
+    ).withColumn(
         "is_fraud_suspect",
-        when(col("amount") > 5000, lit(True)) # Regra 1: Valor Anômalo (Garantido)
-        .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit(True)) # Regra 2: Madrugada + Valor Moderado/Alto
-        .when(col("merchant_category").isin(suspicious_categories) & (col("amount") > 2000), lit(True)) # Regra 4: Categoria Suspeita + Valor
-        .otherwise(lit(False))
+        col("risk_score") >= 0.70 # Flag acende se passar de 70%
     ).withColumn(
         "fraud_reason",
-        when(col("amount") > 5000, lit("High Risk: Anomalous high value transaction (amount > 5000)"))
-        .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit("High Risk: Night time transaction with moderate/high value"))
-        .when(col("merchant_category").isin(suspicious_categories) & (col("amount") > 2000), lit("High Risk: Suspicious merchant category with high value"))
+        when(col("risk_score") >= 0.70, lit("High Risk: Consolidated score exceeded threshold (>= 70%)"))
         .otherwise(lit(None))
-    ).withColumn(
-        "risk_score",
-        when(col("amount") > 5000, lit(0.85)) # 85% de risco
-        .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit(0.75)) # 75% risco
-        .when(col("merchant_category").isin(suspicious_categories) & (col("amount") > 2000), lit(0.70)) # 70% risco
-        .when(col("merchant_category").isin(suspicious_categories), lit(0.40)) # 40% risco só pela categoria
-        .when((col("event_hour") >= 0) & (col("event_hour") <= 5), lit(0.30)) # 30% risco apenas por ser de madrugada
-        .otherwise(lit(0.05)) # 5% Risco comum
     ).withColumn(
         "processed_at", current_timestamp()
     ).drop("event_hour") # Remove a coluna temporária
@@ -129,22 +129,24 @@ def write_silver_stream(silver_stream_df):
             # --- ENGINE DE FRAUDE: Regra 3 (BACK-021) - Heurística de Alta Velocidade ---
             # Avalia ataques de força bruta contando o número de transações da mesma conta neste micro-lote
             from pyspark.sql.window import Window
-            from pyspark.sql.functions import count as spark_count
+            from pyspark.sql.functions import count as spark_count, least
             
             window_spec = Window.partitionBy("account_id")
             valid_df = valid_df.withColumn("tx_count_batch", spark_count("transaction_id").over(window_spec))
             
+            # Adiciona o peso altíssimo de Velocidade ao Score Consolidado
+            velocity_score = when(col("tx_count_batch") >= 3, 0.50).otherwise(0.0)
+            
             valid_df = valid_df.withColumn(
+                "risk_score",
+                least(col("risk_score") + velocity_score, lit(1.0))
+            ).withColumn(
                 "is_fraud_suspect",
-                when(col("tx_count_batch") >= 3, lit(True)).otherwise(col("is_fraud_suspect"))
+                when(col("risk_score") >= 0.70, lit(True)).otherwise(col("is_fraud_suspect"))
             ).withColumn(
                 "fraud_reason",
-                when(col("tx_count_batch") >= 3, lit("Critical Risk: High Velocity (Brute Force / Card Testing)"))
+                when(col("risk_score") >= 0.70, lit("Critical Risk: Velocity or Consolidated Score exceeded threshold"))
                 .otherwise(col("fraud_reason"))
-            ).withColumn(
-                "risk_score",
-                when(col("tx_count_batch") >= 3, lit(0.95)) # Risco altíssimo
-                .otherwise(col("risk_score"))
             ).drop("tx_count_batch") # Limpa a coluna temporária
             
             valid_df.write \
