@@ -1,5 +1,5 @@
 import os
-from pyspark.sql.functions import col, from_json, when, lit
+from pyspark.sql.functions import col, from_json, when, lit, current_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType
 from session import get_spark_session
 
@@ -67,7 +67,27 @@ def process_silver_stream():
     # Garante que, se o produtor ou o Kafka reenviarem a mesma mensagem dentro de 10 minutos, ela será descartada.
     deduplicated_df = watermarked_df.dropDuplicates(["transaction_id", "event_time"])
     
-    return deduplicated_df
+    # =========================================================================
+    # ENGINE DE FRAUDE (FAST PATH)
+    # =========================================================================
+    # Regra 1 (BACK-019): Heurística de Valor Anômalo (Montantes excepcionalmente altos)
+    risk_df = deduplicated_df.withColumn(
+        "is_fraud_suspect",
+        when(col("amount") > 5000, lit(True))
+        .otherwise(lit(False))
+    ).withColumn(
+        "fraud_reason",
+        when(col("amount") > 5000, lit("High Risk: Anomalous high value transaction (amount > 5000)"))
+        .otherwise(lit(None))
+    ).withColumn(
+        "risk_score",
+        when(col("amount") > 5000, lit(0.85)) # Atribui 85% de risco base
+        .otherwise(lit(0.05)) # Risco comum de 5%
+    ).withColumn(
+        "processed_at", current_timestamp()
+    )
+    
+    return risk_df
 
 SILVER_PATH = os.getenv("S3_SILVER_PATH", "s3a://lakehouse/silver/transactions/")
 CHECKPOINT_DIR = os.getenv("S3_CHECKPOINT_DIR", "s3a://lakehouse/checkpoints/")
