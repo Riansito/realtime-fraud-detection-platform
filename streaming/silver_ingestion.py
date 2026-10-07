@@ -75,20 +75,27 @@ def process_silver_stream():
     # Extrai a hora do evento para a Heurística Noturna (BACK-020)
     risk_df = deduplicated_df.withColumn("event_hour", hour(col("event_time")))
     
+    # Categorias de alto risco (BACK-022)
+    suspicious_categories = ["crypto", "jewelry", "gambling"]
+    
     risk_df = risk_df.withColumn(
         "is_fraud_suspect",
         when(col("amount") > 5000, lit(True)) # Regra 1: Valor Anômalo (Garantido)
         .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit(True)) # Regra 2: Madrugada + Valor Moderado/Alto
+        .when(col("merchant_category").isin(suspicious_categories) & (col("amount") > 2000), lit(True)) # Regra 4: Categoria Suspeita + Valor
         .otherwise(lit(False))
     ).withColumn(
         "fraud_reason",
         when(col("amount") > 5000, lit("High Risk: Anomalous high value transaction (amount > 5000)"))
         .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit("High Risk: Night time transaction with moderate/high value"))
+        .when(col("merchant_category").isin(suspicious_categories) & (col("amount") > 2000), lit("High Risk: Suspicious merchant category with high value"))
         .otherwise(lit(None))
     ).withColumn(
         "risk_score",
         when(col("amount") > 5000, lit(0.85)) # 85% de risco
         .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit(0.75)) # 75% risco
+        .when(col("merchant_category").isin(suspicious_categories) & (col("amount") > 2000), lit(0.70)) # 70% risco
+        .when(col("merchant_category").isin(suspicious_categories), lit(0.40)) # 40% risco só pela categoria
         .when((col("event_hour") >= 0) & (col("event_hour") <= 5), lit(0.30)) # 30% risco apenas por ser de madrugada
         .otherwise(lit(0.05)) # 5% Risco comum
     ).withColumn(
