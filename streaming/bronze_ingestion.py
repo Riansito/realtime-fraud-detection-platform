@@ -40,9 +40,34 @@ def read_kafka_stream():
     )
     
     return bronze_df
+BRONZE_PATH = os.getenv("S3_BRONZE_PATH", "s3a://lakehouse/bronze/transactions/")
+
+def write_bronze_stream(bronze_df):
+    """
+    Grava os dados brutos da Camada Bronze no Storage S3 usando o formato Delta.
+    Estratégia: Append-only
+    Partição: ingestion_date
+    """
+    print(f"Writing Bronze stream to {BRONZE_PATH}")
+    
+    # Inicia a escrita contínua (Streaming)
+    query = bronze_df.writeStream \
+        .format("delta") \
+        .outputMode("append") \
+        .partitionBy("ingestion_date") \
+        .trigger(processingTime="10 seconds") \
+        .option("checkpointLocation", "/tmp/bronze_checkpoints") \
+        .start(BRONZE_PATH)
+        
+    return query
 
 if __name__ == "__main__":
-    # Teste unitário manual do fluxo de leitura
-    bronze_stream = read_kafka_stream()
-    print("Bronze stream logic created successfully.")
-    bronze_stream.printSchema()
+    # Teste unitário manual do fluxo de leitura e escrita
+    bronze_stream_df = read_kafka_stream()
+    print("Bronze stream read logic created successfully.")
+    
+    # Inicia a escrita (bloqueia o terminal enquanto escuta o stream)
+    # query = write_bronze_stream(bronze_stream_df)
+    # query.awaitTermination()
+    
+    bronze_stream_df.printSchema()
