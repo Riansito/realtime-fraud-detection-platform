@@ -41,6 +41,7 @@ def read_kafka_stream():
     
     return bronze_df
 BRONZE_PATH = os.getenv("S3_BRONZE_PATH", "s3a://lakehouse/bronze/transactions/")
+CHECKPOINT_DIR = os.getenv("S3_CHECKPOINT_DIR", "s3a://lakehouse/checkpoints/")
 
 def write_bronze_stream(bronze_df):
     """
@@ -50,13 +51,13 @@ def write_bronze_stream(bronze_df):
     """
     print(f"Writing Bronze stream to {BRONZE_PATH}")
     
-    # Inicia a escrita contínua (Streaming)
+    # Inicia a escrita contínua (Streaming) com Checkpointing no S3
     query = bronze_df.writeStream \
         .format("delta") \
         .outputMode("append") \
         .partitionBy("ingestion_date") \
         .trigger(processingTime="10 seconds") \
-        .option("checkpointLocation", "/tmp/bronze_checkpoints") \
+        .option("checkpointLocation", f"{CHECKPOINT_DIR}/bronze") \
         .start(BRONZE_PATH)
         
     return query
