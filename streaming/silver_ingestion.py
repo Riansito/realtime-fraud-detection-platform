@@ -119,6 +119,27 @@ def write_silver_stream(silver_stream_df):
             from pyspark.sql.functions import date_format
             valid_df = valid_df.withColumn("event_date", date_format(col("event_time"), "yyyy-MM-dd"))
             
+            # --- ENGINE DE FRAUDE: Regra 3 (BACK-021) - Heurística de Alta Velocidade ---
+            # Avalia ataques de força bruta contando o número de transações da mesma conta neste micro-lote
+            from pyspark.sql.window import Window
+            from pyspark.sql.functions import count as spark_count
+            
+            window_spec = Window.partitionBy("account_id")
+            valid_df = valid_df.withColumn("tx_count_batch", spark_count("transaction_id").over(window_spec))
+            
+            valid_df = valid_df.withColumn(
+                "is_fraud_suspect",
+                when(col("tx_count_batch") >= 3, lit(True)).otherwise(col("is_fraud_suspect"))
+            ).withColumn(
+                "fraud_reason",
+                when(col("tx_count_batch") >= 3, lit("Critical Risk: High Velocity (Brute Force / Card Testing)"))
+                .otherwise(col("fraud_reason"))
+            ).withColumn(
+                "risk_score",
+                when(col("tx_count_batch") >= 3, lit(0.95)) # Risco altíssimo
+                .otherwise(col("risk_score"))
+            ).drop("tx_count_batch") # Limpa a coluna temporária
+            
             valid_df.write \
                 .format("delta") \
                 .mode("append") \
