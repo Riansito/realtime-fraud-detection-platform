@@ -5,6 +5,8 @@ from session import get_spark_session
 
 BRONZE_PATH = os.getenv("S3_BRONZE_PATH", "s3a://lakehouse/bronze/transactions/")
 DLQ_PATH = os.getenv("S3_DLQ_PATH", "s3a://lakehouse/dlq/transactions/")
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+ALERTS_TOPIC = os.getenv("KAFKA_ALERTS_TOPIC", "fraud_alerts")
 
 # Schema Enforcement rigoroso para os dados contidos no JSON da Camada Bronze
 payload_schema = StructType([
@@ -154,6 +156,26 @@ def write_silver_stream(silver_stream_df):
                 .mode("append") \
                 .partitionBy("event_date") \
                 .save(SILVER_PATH)
+                
+            # --- ENGINE DE FRAUDE: Publicação de Alertas em Tempo Real (BACK-024) ---
+            # Se identificamos fraude (is_fraud_suspect == True), não esperamos o dbt/Gold Layer.
+            # Disparamos um evento imediato de volta para o Kafka para a API atuar e bloquear.
+            alerts_df = valid_df.filter(col("is_fraud_suspect") == True)
+            
+            if not alerts_df.isEmpty():
+                from pyspark.sql.functions import struct, to_json
+                # Kafka exige chave (key) e valor (value) em String/Binary
+                kafka_alerts = alerts_df.select(
+                    col("transaction_id").alias("key"), # Usa transaction_id como Partition Key
+                    to_json(struct("*")).alias("value") # Todo o row formatado como JSON
+                )
+                
+                print(f"Publishing {alerts_df.count()} fraud alerts to topic '{ALERTS_TOPIC}'...")
+                kafka_alerts.write \
+                    .format("kafka") \
+                    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
+                    .option("topic", ALERTS_TOPIC) \
+                    .save()
                 
         # 2. Rota de Falha (Dead Letter Queue)
         invalid_df = batch_df.filter(col("is_valid") == False)
