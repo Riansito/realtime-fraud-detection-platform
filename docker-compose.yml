@@ -42,3 +42,15 @@ services:
       - kafka
     networks:
       - data-net
+
+  transaction-producer:
+    build:
+      context: ./producer
+    container_name: transaction-producer
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - KAFKA_TOPIC_TRANSACTIONS=transactions
+    depends_on:
+      - kafka
+    networks:
+      - data-net
