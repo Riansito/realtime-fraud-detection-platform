@@ -1,10 +1,12 @@
 import os
-from pyspark.sql.functions import col, from_json, when, lit
+from pyspark.sql.functions import col, from_json, when, lit, current_timestamp, hour
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType
 from session import get_spark_session
 
 BRONZE_PATH = os.getenv("S3_BRONZE_PATH", "s3a://lakehouse/bronze/transactions/")
 DLQ_PATH = os.getenv("S3_DLQ_PATH", "s3a://lakehouse/dlq/transactions/")
+KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
+ALERTS_TOPIC = os.getenv("KAFKA_ALERTS_TOPIC", "fraud_alerts")
 
 # Schema Enforcement rigoroso para os dados contidos no JSON da Camada Bronze
 payload_schema = StructType([
@@ -67,7 +69,42 @@ def process_silver_stream():
     # Garante que, se o produtor ou o Kafka reenviarem a mesma mensagem dentro de 10 minutos, ela será descartada.
     deduplicated_df = watermarked_df.dropDuplicates(["transaction_id", "event_time"])
     
-    return deduplicated_df
+    # =========================================================================
+    # ENGINE DE FRAUDE (FAST PATH)
+    # =========================================================================
+    # Cálculo Consolidado de Score (BACK-023)
+    
+    # Extrai a hora do evento para a Heurística Noturna
+    risk_df = deduplicated_df.withColumn("event_hour", hour(col("event_time")))
+    
+    # Categorias de alto risco
+    suspicious_categories = ["crypto", "jewelry", "gambling"]
+    
+    # Definição de Pesos Parciais (Weights)
+    base_risk = lit(0.05)
+    score_value = when(col("amount") > 5000, 0.40).otherwise(0.0)
+    score_time = when((col("event_hour") >= 0) & (col("event_hour") <= 5), 0.30).otherwise(0.0)
+    score_category = when(col("merchant_category").isin(suspicious_categories), 0.30).otherwise(0.0)
+    
+    # Soma dos Pesos
+    from pyspark.sql.functions import least
+    total_score = base_risk + score_value + score_time + score_category
+    
+    risk_df = risk_df.withColumn(
+        "risk_score",
+        least(total_score, lit(1.0)) # Limita o score máximo a 1.0 (100%)
+    ).withColumn(
+        "is_fraud_suspect",
+        col("risk_score") >= 0.70 # Flag acende se passar de 70%
+    ).withColumn(
+        "fraud_reason",
+        when(col("risk_score") >= 0.70, lit("High Risk: Consolidated score exceeded threshold (>= 70%)"))
+        .otherwise(lit(None))
+    ).withColumn(
+        "processed_at", current_timestamp()
+    ).drop("event_hour") # Remove a coluna temporária
+    
+    return risk_df
 
 SILVER_PATH = os.getenv("S3_SILVER_PATH", "s3a://lakehouse/silver/transactions/")
 CHECKPOINT_DIR = os.getenv("S3_CHECKPOINT_DIR", "s3a://lakehouse/checkpoints/")
@@ -91,11 +128,54 @@ def write_silver_stream(silver_stream_df):
             from pyspark.sql.functions import date_format
             valid_df = valid_df.withColumn("event_date", date_format(col("event_time"), "yyyy-MM-dd"))
             
+            # --- ENGINE DE FRAUDE: Regra 3 (BACK-021) - Heurística de Alta Velocidade ---
+            # Avalia ataques de força bruta contando o número de transações da mesma conta neste micro-lote
+            from pyspark.sql.window import Window
+            from pyspark.sql.functions import count as spark_count, least
+            
+            window_spec = Window.partitionBy("account_id")
+            valid_df = valid_df.withColumn("tx_count_batch", spark_count("transaction_id").over(window_spec))
+            
+            # Adiciona o peso altíssimo de Velocidade ao Score Consolidado
+            velocity_score = when(col("tx_count_batch") >= 3, 0.50).otherwise(0.0)
+            
+            valid_df = valid_df.withColumn(
+                "risk_score",
+                least(col("risk_score") + velocity_score, lit(1.0))
+            ).withColumn(
+                "is_fraud_suspect",
+                when(col("risk_score") >= 0.70, lit(True)).otherwise(col("is_fraud_suspect"))
+            ).withColumn(
+                "fraud_reason",
+                when(col("risk_score") >= 0.70, lit("Critical Risk: Velocity or Consolidated Score exceeded threshold"))
+                .otherwise(col("fraud_reason"))
+            ).drop("tx_count_batch") # Limpa a coluna temporária
+            
             valid_df.write \
                 .format("delta") \
                 .mode("append") \
                 .partitionBy("event_date") \
                 .save(SILVER_PATH)
+                
+            # --- ENGINE DE FRAUDE: Publicação de Alertas em Tempo Real (BACK-024) ---
+            # Se identificamos fraude (is_fraud_suspect == True), não esperamos o dbt/Gold Layer.
+            # Disparamos um evento imediato de volta para o Kafka para a API atuar e bloquear.
+            alerts_df = valid_df.filter(col("is_fraud_suspect") == True)
+            
+            if not alerts_df.isEmpty():
+                from pyspark.sql.functions import struct, to_json
+                # Kafka exige chave (key) e valor (value) em String/Binary
+                kafka_alerts = alerts_df.select(
+                    col("transaction_id").alias("key"), # Usa transaction_id como Partition Key
+                    to_json(struct("*")).alias("value") # Todo o row formatado como JSON
+                )
+                
+                print(f"Publishing {alerts_df.count()} fraud alerts to topic '{ALERTS_TOPIC}'...")
+                kafka_alerts.write \
+                    .format("kafka") \
+                    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
+                    .option("topic", ALERTS_TOPIC) \
+                    .save()
                 
         # 2. Rota de Falha (Dead Letter Queue)
         invalid_df = batch_df.filter(col("is_valid") == False)
