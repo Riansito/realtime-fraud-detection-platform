@@ -63,7 +63,11 @@ def process_silver_stream():
     # Fundamental para limpar o estado (State) da memória na próxima etapa de Deduplicação
     watermarked_df = validated_df.withWatermark("event_time", "10 minutes")
     
-    return watermarked_df
+    # Deduplicação Semântica (Stateful Operation protegida pelo Watermark)
+    # Garante que, se o produtor ou o Kafka reenviarem a mesma mensagem dentro de 10 minutos, ela será descartada.
+    deduplicated_df = watermarked_df.dropDuplicates(["transaction_id", "event_time"])
+    
+    return deduplicated_df
 
 if __name__ == "__main__":
     silver_df = process_silver_stream()
