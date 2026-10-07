@@ -1,5 +1,5 @@
 import os
-from pyspark.sql.functions import col, from_json, when, lit, current_timestamp
+from pyspark.sql.functions import col, from_json, when, lit, current_timestamp, hour
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType
 from session import get_spark_session
 
@@ -70,22 +70,30 @@ def process_silver_stream():
     # =========================================================================
     # ENGINE DE FRAUDE (FAST PATH)
     # =========================================================================
-    # Regra 1 (BACK-019): Heurística de Valor Anômalo (Montantes excepcionalmente altos)
-    risk_df = deduplicated_df.withColumn(
+    # Combinação de Heurísticas de Risco
+    
+    # Extrai a hora do evento para a Heurística Noturna (BACK-020)
+    risk_df = deduplicated_df.withColumn("event_hour", hour(col("event_time")))
+    
+    risk_df = risk_df.withColumn(
         "is_fraud_suspect",
-        when(col("amount") > 5000, lit(True))
+        when(col("amount") > 5000, lit(True)) # Regra 1: Valor Anômalo (Garantido)
+        .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit(True)) # Regra 2: Madrugada + Valor Moderado/Alto
         .otherwise(lit(False))
     ).withColumn(
         "fraud_reason",
         when(col("amount") > 5000, lit("High Risk: Anomalous high value transaction (amount > 5000)"))
+        .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit("High Risk: Night time transaction with moderate/high value"))
         .otherwise(lit(None))
     ).withColumn(
         "risk_score",
-        when(col("amount") > 5000, lit(0.85)) # Atribui 85% de risco base
-        .otherwise(lit(0.05)) # Risco comum de 5%
+        when(col("amount") > 5000, lit(0.85)) # 85% de risco
+        .when((col("event_hour") >= 0) & (col("event_hour") <= 5) & (col("amount") > 1000), lit(0.75)) # 75% risco
+        .when((col("event_hour") >= 0) & (col("event_hour") <= 5), lit(0.30)) # 30% risco apenas por ser de madrugada
+        .otherwise(lit(0.05)) # 5% Risco comum
     ).withColumn(
         "processed_at", current_timestamp()
-    )
+    ).drop("event_hour") # Remove a coluna temporária
     
     return risk_df
 
