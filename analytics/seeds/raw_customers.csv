@@ -1,0 +1,6 @@
+customer_id,full_name,email,phone,risk_profile,city,state
+CUST-1001,João Silva,joao@email.com,11999999999,LOW,São Paulo,SP
+CUST-1002,Maria Oliveira,maria@email.com,21988888888,MEDIUM,Rio de Janeiro,RJ
+CUST-1003,Carlos Santos,carlos@email.com,31977777777,HIGH,Belo Horizonte,MG
+CUST-1004,Ana Costa,ana@email.com,41966666666,LOW,Curitiba,PR
+CUST-1005,Lucas Pereira,lucas@email.com,51955555555,LOW,Porto Alegre,RS
