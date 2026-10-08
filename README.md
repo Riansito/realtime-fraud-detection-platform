@@ -188,8 +188,13 @@ O Apache Spark consome o streaming e realiza:
 * Checkpointing da Bronze no S3.
 * Schema Enforcement rigoroso (desvio para Dead Letter Queue no S3 caso inválido).
 * Deduplicação (evita transações cobradas duas vezes via Watermarking de 10 min).
-* Motor de Regras: Avalia velocidade, horários suspeitos e valores (Risk Score).
-* Disparo Imediato: Se a pontuação passar de 70, o Spark posta a fraude no tópico `fraud_alerts`.
+* **Motor de Regras (Risk Score)**: Avalia o risco de cada transação com base nas seguintes heurísticas (limite máximo de 100% / 1.0):
+  * **Risco Base:** Toda transação inicia com 5% (0.05).
+  * **Valor Alto:** Transações acima de 5000 adicionam +40% (0.40).
+  * **Horário Suspeito:** Transações na madrugada (00h às 05h) adicionam +30% (0.30).
+  * **Categoria de Risco:** Categorias como 'crypto', 'jewelry' e 'gambling' adicionam +30% (0.30).
+  * **Alta Velocidade (Ataque de Força Bruta):** 3 ou mais transações da mesma conta no mesmo micro-lote adicionam +50% (0.50).
+* Disparo Imediato: Se a pontuação (Risk Score) passar de 70% (0.70), o Spark classifica como suspeita e posta a fraude imediatamente no tópico `fraud_alerts`.
 
 Ao final, os dados validados e higienizados vão para a tabela `silver.transactions` no DW.
 
