@@ -202,8 +202,8 @@ if __name__ == "__main__":
     # Pipeline Completo da Camada Silver
     silver_df = process_silver_stream()
     
-    # Descomente para testes locais
-    # query = write_silver_stream(silver_df)
-    # query.awaitTermination()
+    # Iniciar testes locais
+    query = write_silver_stream(silver_df)
+    query.awaitTermination()
     
     print("Silver stream Pipeline (Schema Enforcement -> DLQ -> Watermark -> Deduplication -> Write) Configured Successfully!")
