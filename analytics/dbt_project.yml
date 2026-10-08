@@ -17,7 +17,11 @@ clean-targets:
 
 models:
   fraud_detection_analytics:
-    staging:
-      +materialized: view
     gold:
       +materialized: table
+
+seeds:
+  fraud_detection_analytics:
+    raw_customers:
+      +column_types:
+        phone: varchar(20)

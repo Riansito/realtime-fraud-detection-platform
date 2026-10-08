@@ -4,7 +4,7 @@ models:
   - name: dim_date
     description: "Dimensão de datas para análise temporal."
     columns:
-      - name: date_id
+      - name: date_sk
         description: "Chave primária numérica (ex: 20231024)."
         tests:
           - unique
@@ -21,7 +21,7 @@ models:
         tests:
           - unique
           - not_null
-      - name: merchant_category
+      - name: category
         tests:
           - not_null
 
@@ -33,20 +33,20 @@ models:
         tests:
           - unique
           - not_null
-      - name: merchant_id
+      - name: merchant_sk
         description: "Chave estrangeira para dim_merchant."
         tests:
           - not_null
           - relationships:
               to: ref('dim_merchant')
-              field: merchant_id
-      - name: date_id
+              field: merchant_sk
+      - name: date_sk
         description: "Chave estrangeira para dim_date."
         tests:
           - not_null
           - relationships:
               to: ref('dim_date')
-              field: date_id
+              field: date_sk
       - name: amount
         description: "Valor da transação."
         tests:
