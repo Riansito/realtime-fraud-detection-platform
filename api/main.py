@@ -31,6 +31,10 @@ class AlertResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+class ActionRequest(BaseModel):
+    status: str
+    operator_notes: Optional[str] = None
+
 # Database connection pool reference
 db_pool = None
 
@@ -93,6 +97,34 @@ async def get_alert_detail(transaction_id: str):
     
     async with db_pool.acquire() as conn:
         record = await conn.fetchrow(query, transaction_id)
+        
+    if not record:
+        raise HTTPException(status_code=404, detail="Alert not found")
+        
+    return dict(record)
+
+@app.post("/api/v1/alerts/{transaction_id}/action", response_model=AlertResponse)
+async def triage_alert(transaction_id: str, action: ActionRequest):
+    """
+    Realiza a triagem operacional de um alerta, alterando seu status para APPROVED ou BLOCKED.
+    """
+    if action.status not in ["APPROVED", "BLOCKED"]:
+        raise HTTPException(status_code=400, detail="Invalid status. Must be APPROVED or BLOCKED")
+        
+    if not db_pool:
+        raise HTTPException(status_code=500, detail="Database connection pool is not initialized")
+        
+    query_update = """
+        UPDATE operational.operational_alerts
+        SET status = $1, operator_notes = $2, updated_at = CURRENT_TIMESTAMP
+        WHERE transaction_id = $3
+        RETURNING alert_id, transaction_id, account_id, customer_id, amount,
+                  risk_score, risk_level, fraud_reason, status, operator_notes,
+                  event_time, created_at, updated_at
+    """
+    
+    async with db_pool.acquire() as conn:
+        record = await conn.fetchrow(query_update, action.status, action.operator_notes, transaction_id)
         
     if not record:
         raise HTTPException(status_code=404, detail="Alert not found")
