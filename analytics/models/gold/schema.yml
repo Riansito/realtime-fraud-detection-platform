@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Dimensão de datas para análise temporal."
+    columns:
+      - name: date_id
+        description: "Chave primária numérica (ex: 20231024)."
+        tests:
+          - unique
+          - not_null
+      - name: full_date
+        tests:
+          - not_null
+
+  - name: dim_merchant
+    description: "Dimensão de Lojistas consolidados."
+    columns:
+      - name: merchant_id
+        description: "Chave primária do lojista."
+        tests:
+          - unique
+          - not_null
+      - name: merchant_category
+        tests:
+          - not_null
+
+  - name: fact_transactions
+    description: "Tabela fato contendo todas as transações, enriquecidas com surrogate keys e scores de risco."
+    columns:
+      - name: transaction_id
+        description: "Identificador único da transação (Primary Key)."
+        tests:
+          - unique
+          - not_null
+      - name: merchant_id
+        description: "Chave estrangeira para dim_merchant."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_merchant')
+              field: merchant_id
+      - name: date_id
+        description: "Chave estrangeira para dim_date."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: amount
+        description: "Valor da transação."
+        tests:
+          - not_null
+      - name: currency
+        description: "Moeda utilizada na transação."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['USD', 'EUR', 'BRL', 'GBP', 'JPY', 'CAD', 'AUD']
+      - name: is_fraud_suspect
+        description: "Flag indicando se a transação foi bloqueada/marcada como fraude pela heurística."
+        tests:
+          - not_null
+      - name: risk_score
+        description: "Score de risco consolidado."
+        tests:
+          - not_null
