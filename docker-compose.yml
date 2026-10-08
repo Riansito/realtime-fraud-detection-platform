@@ -97,6 +97,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./analytics:/opt/airflow/analytics
     command: webserver
     networks:
       - data-net
@@ -115,6 +116,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./analytics:/opt/airflow/analytics
     command: scheduler
     networks:
       - data-net
