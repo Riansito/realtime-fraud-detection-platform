@@ -5,15 +5,35 @@
 ) }}
 
 with transactions as (
-    select * from {{ source('silver', 'transactions') }}
+    -- Append JDBC não é idempotente: um micro-batch reprocessado após falha
+    -- pode duplicar linhas no Silver. Mantemos a primeira ocorrência.
+    select distinct on (transaction_id) *
+    from {{ source('silver', 'transactions') }}
+    order by transaction_id, processed_at
 ),
 
+-- SCD2: a primeira versão de cada entidade vale desde sempre, senão eventos
+-- anteriores ao primeiro `dbt snapshot` ficariam sem dimensão.
 dim_customer as (
-    select * from {{ ref('dim_customer') }}
+    select
+        *,
+        case
+            when row_number() over (partition by customer_id order by dbt_valid_from) = 1
+                then '1900-01-01'::timestamptz
+            else dbt_valid_from
+        end as valid_from
+    from {{ ref('dim_customer') }}
 ),
 
 dim_account as (
-    select * from {{ ref('dim_account') }}
+    select
+        *,
+        case
+            when row_number() over (partition by account_id order by dbt_valid_from) = 1
+                then '1900-01-01'::timestamptz
+            else dbt_valid_from
+        end as valid_from
+    from {{ ref('dim_account') }}
 ),
 
 dim_merchant as (
@@ -54,12 +74,12 @@ from transactions t
 
 left join dim_customer c
     on t.customer_id = c.customer_id
-    and cast(t.event_time as timestamp with time zone) >= c.dbt_valid_from
+    and cast(t.event_time as timestamp with time zone) >= c.valid_from
     and (cast(t.event_time as timestamp with time zone) < c.dbt_valid_to or c.dbt_valid_to is null)
 
 left join dim_account a
     on t.account_id = a.account_id
-    and cast(t.event_time as timestamp with time zone) >= a.dbt_valid_from
+    and cast(t.event_time as timestamp with time zone) >= a.valid_from
     and (cast(t.event_time as timestamp with time zone) < a.dbt_valid_to or a.dbt_valid_to is null)
 
 left join dim_merchant m

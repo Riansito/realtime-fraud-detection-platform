@@ -84,6 +84,8 @@ services:
   airflow-webserver:
     image: apache/airflow:2.7.3
     container_name: airflow-webserver
+    env_file:
+      - .env
     depends_on:
       - postgres-airflow
       - airflow-init
@@ -105,6 +107,8 @@ services:
   airflow-scheduler:
     image: apache/airflow:2.7.3
     container_name: airflow-scheduler
+    env_file:
+      - .env
     depends_on:
       - postgres-airflow
       - airflow-init
@@ -125,8 +129,11 @@ services:
     build:
       context: ./streaming
     container_name: spark-bronze
+    restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
     command: spark-submit --packages io.delta:delta-spark_2.12:3.1.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262,org.postgresql:postgresql:42.7.2 bronze_ingestion.py
     depends_on:
       - kafka
@@ -137,8 +144,13 @@ services:
     build:
       context: ./streaming
     container_name: spark-silver
+    # Reinicia em falhas transitórias (queda de conexão com o Neon, Bronze ainda
+    # não inicializado). O checkpoint no S3 garante que retoma de onde parou.
+    restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
     command: spark-submit --packages io.delta:delta-spark_2.12:3.1.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262,org.postgresql:postgresql:42.7.2 silver_ingestion.py
     depends_on:
       - kafka

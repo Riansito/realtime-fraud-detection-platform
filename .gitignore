@@ -32,3 +32,9 @@ pip-delete-this-directory.txt
 # Logs
 logs/
 *.log
+
+# DBT
+analytics/target/
+analytics/dbt_packages/
+analytics/logs/
+analytics/.user.yml
