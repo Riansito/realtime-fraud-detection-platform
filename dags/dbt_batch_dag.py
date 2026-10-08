@@ -1,5 +1,5 @@
-import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 
@@ -17,7 +17,7 @@ with DAG(
     default_args=default_args,
     description='Executa os modelos do dbt em lote na camada Gold',
     schedule_interval='@daily',
-    start_date=datetime(2026, 10, 1),
+    start_date=datetime(2026, 10, 1, tzinfo=timezone.utc),
     catchup=False,
     tags=['dbt', 'analytics', 'gold'],
 ) as dag:
