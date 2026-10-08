@@ -20,7 +20,7 @@ snapshots:
         tests:
           - not_null
           - accepted_values:
-              values: ['Low', 'Medium', 'High', 'Critical']
+              values: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
 
   - name: dim_account
     description: "SCD Type 2 snapshot da dimensão de contas."
@@ -41,4 +41,4 @@ snapshots:
         tests:
           - not_null
           - accepted_values:
-              values: ['Active', 'Suspended', 'Closed']
+              values: ['ACTIVE', 'SUSPENDED', 'CLOSED', 'BLOCKED']
