@@ -15,7 +15,7 @@ structlog.configure(
     processors=[
         structlog.processors.add_log_level,
         structlog.processors.TimeStamper(fmt="iso"),
-        structlog.processors.JSONRenderer()
+        structlog.processors.JSONRenderer(),
     ]
 )
 logger = structlog.get_logger("alerts-worker")
@@ -23,7 +23,9 @@ logger = structlog.get_logger("alerts-worker")
 # Kafka configs
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 KAFKA_TOPIC_FRAUD_ALERTS = os.getenv("KAFKA_TOPIC_FRAUD_ALERTS", "fraud_alerts")
-KAFKA_CONSUMER_GROUP = os.getenv("KAFKA_CONSUMER_GROUP_ALERTS", "fastapi-alerts-operational-group")
+KAFKA_CONSUMER_GROUP = os.getenv(
+    "KAFKA_CONSUMER_GROUP_ALERTS", "fastapi-alerts-operational-group"
+)
 
 # DB configs
 DB_HOST = os.getenv("POSTGRES_HOST", "localhost")
@@ -32,6 +34,7 @@ DB_NAME = os.getenv("POSTGRES_DB", "postgres")
 DB_USER = os.getenv("POSTGRES_USER", "postgres")
 DB_PASS = os.getenv("POSTGRES_PASSWORD", "postgres")
 DB_SSLMODE = os.getenv("POSTGRES_SSLMODE", "require")
+
 
 async def get_db_pool():
     # In local development without SSL, we might need to disable it
@@ -42,8 +45,9 @@ async def get_db_pool():
         user=DB_USER,
         password=DB_PASS,
         database=DB_NAME,
-        ssl=ssl_context
+        ssl=ssl_context,
     )
+
 
 async def consume_alerts():
     logger.info("connecting_kafka", bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
@@ -53,18 +57,18 @@ async def consume_alerts():
         group_id=KAFKA_CONSUMER_GROUP,
         auto_offset_reset="earliest",
         enable_auto_commit=False,
-        value_deserializer=lambda x: json.loads(x.decode("utf-8"))
+        value_deserializer=lambda x: json.loads(x.decode("utf-8")),
     )
-    
+
     await consumer.start()
-    
+
     pool = await get_db_pool()
-    
+
     try:
         logger.info("listening_alerts", topic=KAFKA_TOPIC_FRAUD_ALERTS)
         async for msg in consumer:
             payload = msg.value
-            
+
             # The event from Spark has is_fraud_suspect, risk_score, fraud_reason, etc.
             # But according to 5.2, we also have risk_level. If missing, we infer it.
             # Some fields like alert_id from Spark are mapped to our DB columns.
@@ -73,12 +77,16 @@ async def consume_alerts():
             customer_id = payload.get("customer_id")
             amount = payload.get("amount")
             risk_score = payload.get("risk_score")
-            risk_level = payload.get("risk_level", "HIGH" if risk_score < 0.9 else "CRITICAL")
+            risk_level = payload.get(
+                "risk_level", "HIGH" if risk_score < 0.9 else "CRITICAL"
+            )
             fraud_reason = payload.get("fraud_reason", "Score exceeded threshold")
             event_time = payload.get("event_time")
-            
-            logger.info("received_alert", transaction_id=transaction_id, risk_score=risk_score)
-            
+
+            logger.info(
+                "received_alert", transaction_id=transaction_id, risk_score=risk_score
+            )
+
             # Insert into operational.operational_alerts
             query = """
                 INSERT INTO operational.operational_alerts (
@@ -88,7 +96,7 @@ async def consume_alerts():
                     $1, $2, $3, $4, $5, $6, $7, $8::timestamptz
                 ) ON CONFLICT (transaction_id) DO NOTHING;
             """
-            
+
             async with pool.acquire() as conn:
                 try:
                     await conn.execute(
@@ -100,20 +108,25 @@ async def consume_alerts():
                         risk_score,
                         risk_level,
                         fraud_reason,
-                        event_time
+                        event_time,
                     )
-                    
+
                     # Commit offset manually after successful processing
                     await consumer.commit()
                     logger.info("processed_alert", transaction_id=transaction_id)
                 except Exception as e:  # noqa: BLE001
-                    logger.error("process_alert_failed", transaction_id=transaction_id, error=str(e))
+                    logger.error(
+                        "process_alert_failed",
+                        transaction_id=transaction_id,
+                        error=str(e),
+                    )
                     # In a real system, you might send to a DLQ or retry
-                    
+
     finally:
         logger.info("closing_connections")
         await consumer.stop()
         await pool.close()
+
 
 if __name__ == "__main__":
     asyncio.run(consume_alerts())
