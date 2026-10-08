@@ -1,6 +1,7 @@
 import os
 import asyncpg
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
@@ -69,6 +70,9 @@ async def lifespan(app: FastAPI):
     await db_pool.close()
 
 app = FastAPI(title="Fraud Detection Operational API", lifespan=lifespan)
+
+# Mount static files for the UI
+app.mount("/ui", StaticFiles(directory="api/static", html=True), name="static")
 
 @app.get("/api/v1/alerts", response_model=List[AlertResponse])
 async def get_recent_alerts(status: str = "PENDING", limit: int = 50):
