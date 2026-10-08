@@ -232,16 +232,12 @@ def write_silver_stream(silver_stream_df):
 
             # Salva no DW (Postgres) via JDBC para alimentar a camada Silver
             jdbc_url = f"jdbc:postgresql://{os.getenv('POSTGRES_HOST', 'localhost')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB', 'postgres')}?sslmode={os.getenv('POSTGRES_SSLMODE', 'require')}&stringtype=unspecified"
-            
-            valid_df.write \
-                .format("jdbc") \
-                .option("url", jdbc_url) \
-                .option("dbtable", "silver.transactions") \
-                .option("user", os.getenv("POSTGRES_USER", "postgres")) \
-                .option("password", os.getenv("POSTGRES_PASSWORD", "postgres")) \
-                .option("driver", "org.postgresql.Driver") \
-                .mode("append") \
-                .save()
+
+            valid_df.write.format("jdbc").option("url", jdbc_url).option(
+                "dbtable", "silver.transactions"
+            ).option("user", os.getenv("POSTGRES_USER", "postgres")).option(
+                "password", os.getenv("POSTGRES_PASSWORD", "postgres")
+            ).option("driver", "org.postgresql.Driver").mode("append").save()
 
             # --- ENGINE DE FRAUDE: Publicação de Alertas em Tempo Real (BACK-024) ---
             # Se identificamos fraude (is_fraud_suspect == True), não esperamos o dbt/Gold Layer.

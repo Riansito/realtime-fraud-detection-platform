@@ -23,7 +23,9 @@ def get_spark_session(app_name="RealTimeFraudDetection"):
         SparkSession.builder.appName(app_name)
         .config("spark.jars.packages", ",".join(packages))
         # Default (200) creates 200 S3-backed state stores per batch -> very slow
-        .config("spark.sql.shuffle.partitions", os.getenv("SPARK_SHUFFLE_PARTITIONS", "4"))
+        .config(
+            "spark.sql.shuffle.partitions", os.getenv("SPARK_SHUFFLE_PARTITIONS", "4")
+        )
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
         .config(
             "spark.sql.catalog.spark_catalog",
