@@ -1,12 +1,13 @@
 import json
+import os
+import random
 import time
 import uuid
-import random
-import os
 from datetime import datetime, timezone
-from faker import Faker
+
 from confluent_kafka import Producer
 from dotenv import load_dotenv
+from faker import Faker
 
 # Load environment variables
 # This will try to find .env file from where it is executed, or parent directories

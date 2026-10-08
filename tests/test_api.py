@@ -1,5 +1,5 @@
-import pytest
 from fastapi.testclient import TestClient
+
 from api.main import app
 
 # We bypass the lifespan DB pool for basic static UI testing

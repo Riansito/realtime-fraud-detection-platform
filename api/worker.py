@@ -1,9 +1,10 @@
-import os
-import json
 import asyncio
+import json
+import os
+
+import asyncpg
 import structlog
 from aiokafka import AIOKafkaConsumer
-import asyncpg
 from dotenv import load_dotenv
 
 # Load env vars
@@ -34,7 +35,7 @@ DB_SSLMODE = os.getenv("POSTGRES_SSLMODE", "require")
 
 async def get_db_pool():
     # In local development without SSL, we might need to disable it
-    ssl_context = False if DB_SSLMODE == "disable" else True
+    ssl_context = DB_SSLMODE != "disable"
     return await asyncpg.create_pool(
         host=DB_HOST,
         port=DB_PORT,
@@ -105,7 +106,7 @@ async def consume_alerts():
                     # Commit offset manually after successful processing
                     await consumer.commit()
                     logger.info("processed_alert", transaction_id=transaction_id)
-                except Exception as e:
+                except Exception as e:  # noqa: BLE001
                     logger.error("process_alert_failed", transaction_id=transaction_id, error=str(e))
                     # In a real system, you might send to a DLQ or retry
                     

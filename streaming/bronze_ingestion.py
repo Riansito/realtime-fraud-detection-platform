@@ -1,4 +1,5 @@
 import os
+
 from pyspark.sql.functions import col, current_timestamp, date_format
 from pyspark.sql.types import StringType
 from session import get_spark_session
