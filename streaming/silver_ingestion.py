@@ -124,6 +124,14 @@ def write_silver_stream(silver_stream_df):
             .drop("is_valid", "dlq_reason", "raw_payload") # Limpamos colunas de debug
             
         if not valid_df.isEmpty():
+            # --- DATA QUALITY ASSERTS (BACK-038) ---
+            invalid_amounts = valid_df.filter(col("amount").isNull() | (col("amount") <= 0)).count()
+            assert invalid_amounts == 0, f"Data Quality Error: Found {invalid_amounts} rows with invalid amount in Silver!"
+            
+            valid_currencies = ["USD", "EUR", "BRL", "GBP", "JPY", "CAD", "AUD"]
+            invalid_currencies = valid_df.filter(~col("currency").isin(valid_currencies)).count()
+            assert invalid_currencies == 0, f"Data Quality Error: Found {invalid_currencies} rows with invalid currency in Silver!"
+
             # Cria a partição event_date fisicamente
             from pyspark.sql.functions import date_format
             valid_df = valid_df.withColumn("event_date", date_format(col("event_time"), "yyyy-MM-dd"))
