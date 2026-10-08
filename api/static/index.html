@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Radar | Sentinel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface-color: rgba(20, 27, 45, 0.6);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --primary-color: #6366f1;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(239, 68, 68, 0.15), transparent 25%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--surface-border);
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--danger-color);
+            box-shadow: 0 0 12px var(--danger-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        main {
+            width: 100%;
+            max-width: 1200px;
+            padding: 3rem 2rem;
+            flex: 1;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--surface-color);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(16px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alerts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .alert-card {
+            background: var(--surface-color);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            backdrop-filter: blur(16px);
+            transition: all 0.2s ease;
+        }
+
+        .alert-card:hover {
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .risk-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .risk-indicator.high {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .risk-indicator .score {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .risk-indicator .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .alert-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .alert-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .alert-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .alert-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .alert-reason {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+            background: rgba(255,255,255,0.05);
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .alert-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            outline: none;
+        }
+
+        .btn-block {
+            background: var(--danger-color);
+            color: white;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-block:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-approve {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-approve:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+            background: var(--surface-color);
+            border: 1px dashed var(--surface-border);
+            border-radius: 16px;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <div class="brand-dot"></div>
+            Sentinel Risk Operations
+        </div>
+        <div style="font-size: 0.875rem; color: var(--text-muted);">
+            Real-time Monitoring Active
+        </div>
+    </header>
+
+    <main>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Fraud Rate</div>
+                <div class="metric-value" id="metric-rate">--%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total Transactions</div>
+                <div class="metric-value" id="metric-tx">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Suspected Incidents</div>
+                <div class="metric-value" id="metric-suspects">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Value at Risk</div>
+                <div class="metric-value" id="metric-value">$0.00</div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            Pending Triage Queue
+        </div>
+
+        <div class="alerts-grid" id="alerts-container">
+            <!-- Loader -->
+            <div class="empty-state" id="loader">
+                Loading incidents...
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE = '/api/v1';
+
+        async function fetchMetrics() {
+            try {
+                const res = await fetch(`${API_BASE}/analytics/metrics/fraud-rate`);
+                const data = await res.json();
+                document.getElementById('metric-rate').textContent = `${data.fraud_rate_percentage}%`;
+                document.getElementById('metric-tx').textContent = data.total_transactions.toLocaleString();
+                document.getElementById('metric-suspects').textContent = data.total_suspected_fraud.toLocaleString();
+                document.getElementById('metric-value').textContent = `$${data.total_fraud_amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            } catch (e) {
+                console.error("Failed to fetch metrics", e);
+            }
+        }
+
+        async function fetchAlerts() {
+            try {
+                const res = await fetch(`${API_BASE}/alerts?status=PENDING&limit=20`);
+                const alerts = await res.json();
+                renderAlerts(alerts);
+            } catch (e) {
+                console.error("Failed to fetch alerts", e);
+                document.getElementById('alerts-container').innerHTML = '<div class="empty-state">Error loading alerts.</div>';
+            }
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+        }
+
+        function renderAlerts(alerts) {
+            const container = document.getElementById('alerts-container');
+            if (alerts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 1rem; opacity: 0.5;">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p>No pending alerts. Queue is clear!</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            alerts.forEach(alert => {
+                const isCritical = alert.risk_level === 'CRITICAL';
+                const el = document.createElement('div');
+                el.className = 'alert-card';
+                el.id = `alert-${alert.transaction_id}`;
+                
+                el.innerHTML = `
+                    <div class="risk-indicator ${isCritical ? '' : 'high'}">
+                        <span class="score">${(alert.risk_score * 100).toFixed(0)}</span>
+                        <span class="label">Score</span>
+                    </div>
+                    <div class="alert-details">
+                        <div class="alert-title">Suspicious Transaction: ${formatCurrency(alert.amount)}</div>
+                        <div class="alert-meta">
+                            <span>ID: ${alert.transaction_id.substring(0, 12)}...</span>
+                            <span>Customer: ${alert.customer_id}</span>
+                            <span>${new Date(alert.event_time).toLocaleString()}</span>
+                        </div>
+                        <div class="alert-reason">${alert.fraud_reason.replace(/;/g, ' &bull; ').replace(/_/g, ' ')}</div>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn-approve" onclick="triageAlert('${alert.transaction_id}', 'APPROVED')">Approve (Safe)</button>
+                        <button class="btn-block" onclick="triageAlert('${alert.transaction_id}', 'BLOCKED')">Block (Fraud)</button>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        async function triageAlert(txId, status) {
+            try {
+                const res = await fetch(`${API_BASE}/alerts/${txId}/action`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status, operator_notes: "Triaged via Web UI" })
+                });
+
+                if (res.ok) {
+                    const card = document.getElementById(`alert-${txId}`);
+                    card.classList.add('fade-out');
+                    setTimeout(() => {
+                        card.remove();
+                        fetchMetrics(); // Update metrics
+                        
+                        // Check if empty
+                        if (document.querySelectorAll('.alert-card').length === 0) {
+                            fetchAlerts();
+                        }
+                    }, 300);
+                } else {
+                    alert('Action failed.');
+                }
+            } catch (e) {
+                console.error("Action error", e);
+            }
+        }
+
+        // Init
+        fetchMetrics();
+        fetchAlerts();
+        
+        // Auto-refresh metrics every 10s
+        setInterval(fetchMetrics, 10000);
+    </script>
+</body>
+</html>
