@@ -71,7 +71,8 @@ Entre os principais objetivos estão:
 ```
 
 Imagem da arquitetura da Plataforma:
-<img width="1672" height="941" alt="Arquitetura do Projeto" src="https://github.com/user-attachments/assets/83a50022-e1e7-49cf-b301-cc2b5873f7c7" />
+<img width="1672" height="941" alt="b2f8b304-dd2b-461f-a83d-b2b25f3d41a7" src="https://github.com/user-attachments/assets/f50c6c92-f707-4bc1-8cf8-7a20a7a1c0cb" />
+
 
 ---
 
@@ -223,7 +224,7 @@ Na UI, o analista consegue visualizar:
 3. Fila interativa de alertas críticos pendentes.
 4. Botões de "Bloquear (Fraude)" ou "Aprovar (Seguro)" que processam as respostas no backend imediatamente.
 
-<img width="1917" height="903" alt="Interface da API Sentinel" src="https://github.com/user-attachments/assets/75309863-e141-4038-b29c-451fa518676c" />
+<img width="1892" height="906" alt="Captura de tela 2026-10-08 152254" src="https://github.com/user-attachments/assets/3af57691-09ae-4969-b331-7badadec59ee" />
 
 ---
 
