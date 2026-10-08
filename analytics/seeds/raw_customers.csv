@@ -1,6 +1,901 @@
 customer_id,full_name,email,phone,risk_profile,city,state
-CUST-1001,João Silva,joao@email.com,11999999999,LOW,São Paulo,SP
-CUST-1002,Maria Oliveira,maria@email.com,21988888888,MEDIUM,Rio de Janeiro,RJ
-CUST-1003,Carlos Santos,carlos@email.com,31977777777,HIGH,Belo Horizonte,MG
-CUST-1004,Ana Costa,ana@email.com,41966666666,LOW,Curitiba,PR
-CUST-1005,Lucas Pereira,lucas@email.com,51955555555,LOW,Porto Alegre,RS
+CUST-100,Ana Silva,ana.silva100@email.com,51942868828,LOW,Porto Alegre,RS
+CUST-101,Ana Gomes,ana.gomes101@email.com,21989254563,LOW,Rio de Janeiro,RJ
+CUST-102,João Oliveira,joao.oliveira102@email.com,41941227216,LOW,Curitiba,PR
+CUST-103,João Ferreira,joao.ferreira103@email.com,41997226012,MEDIUM,Curitiba,PR
+CUST-104,Beatriz Costa,beatriz.costa104@email.com,61989089901,LOW,Brasília,DF
+CUST-105,João Araújo,joao.araujo105@email.com,31966722344,LOW,Belo Horizonte,MG
+CUST-106,Lucas Costa,lucas.costa106@email.com,71923718431,LOW,Salvador,BA
+CUST-107,Ana Souza,ana.souza107@email.com,71991030736,LOW,Salvador,BA
+CUST-108,Maria Martins,maria.martins108@email.com,61981971316,LOW,Brasília,DF
+CUST-109,Gabriel Oliveira,gabriel.oliveira109@email.com,51994374605,LOW,Porto Alegre,RS
+CUST-110,Larissa Rodrigues,larissa.rodrigues110@email.com,41919335534,LOW,Curitiba,PR
+CUST-111,Fernanda Araújo,fernanda.araujo111@email.com,51920709497,MEDIUM,Porto Alegre,RS
+CUST-112,Ana Lima,ana.lima112@email.com,51970855700,LOW,Porto Alegre,RS
+CUST-113,Larissa Santos,larissa.santos113@email.com,71957683626,LOW,Salvador,BA
+CUST-114,Rafael Martins,rafael.martins114@email.com,21991756179,LOW,Rio de Janeiro,RJ
+CUST-115,Fernanda Santos,fernanda.santos115@email.com,61960929647,LOW,Brasília,DF
+CUST-116,Fernanda Gomes,fernanda.gomes116@email.com,71917507864,LOW,Salvador,BA
+CUST-117,Maria Araújo,maria.araujo117@email.com,71963843426,LOW,Salvador,BA
+CUST-118,Pedro Carvalho,pedro.carvalho118@email.com,71938538251,LOW,Salvador,BA
+CUST-119,Gabriel Carvalho,gabriel.carvalho119@email.com,61929175900,LOW,Brasília,DF
+CUST-120,Fernanda Martins,fernanda.martins120@email.com,51988461803,LOW,Porto Alegre,RS
+CUST-121,Gabriel Souza,gabriel.souza121@email.com,41928566572,LOW,Curitiba,PR
+CUST-122,Carlos Araújo,carlos.araujo122@email.com,11924716857,LOW,São Paulo,SP
+CUST-123,Juliana Araújo,juliana.araujo123@email.com,81990048665,LOW,Recife,PE
+CUST-124,Gabriel Rodrigues,gabriel.rodrigues124@email.com,61981016525,LOW,Brasília,DF
+CUST-125,João Gomes,joao.gomes125@email.com,21982070937,MEDIUM,Rio de Janeiro,RJ
+CUST-126,Bruno Oliveira,bruno.oliveira126@email.com,51968353204,LOW,Porto Alegre,RS
+CUST-127,João Martins,joao.martins127@email.com,51977187530,MEDIUM,Porto Alegre,RS
+CUST-128,Ana Ribeiro,ana.ribeiro128@email.com,51995758349,LOW,Porto Alegre,RS
+CUST-129,Pedro Santos,pedro.santos129@email.com,71931682744,LOW,Salvador,BA
+CUST-130,João Rodrigues,joao.rodrigues130@email.com,71975579548,LOW,Salvador,BA
+CUST-131,Larissa Carvalho,larissa.carvalho131@email.com,51942138745,LOW,Porto Alegre,RS
+CUST-132,Carlos Oliveira,carlos.oliveira132@email.com,61919289546,HIGH,Brasília,DF
+CUST-133,Lucas Santos,lucas.santos133@email.com,61983793389,LOW,Brasília,DF
+CUST-134,Beatriz Costa,beatriz.costa134@email.com,41951837852,LOW,Curitiba,PR
+CUST-135,Larissa Almeida,larissa.almeida135@email.com,61926240908,LOW,Brasília,DF
+CUST-136,Carlos Souza,carlos.souza136@email.com,11988961459,LOW,São Paulo,SP
+CUST-137,Fernanda Silva,fernanda.silva137@email.com,21994705205,LOW,Rio de Janeiro,RJ
+CUST-138,Carlos Carvalho,carlos.carvalho138@email.com,11954349361,LOW,São Paulo,SP
+CUST-139,Fernanda Pereira,fernanda.pereira139@email.com,61938754377,LOW,Brasília,DF
+CUST-140,Paula Costa,paula.costa140@email.com,61964634663,LOW,Brasília,DF
+CUST-141,Ana Gomes,ana.gomes141@email.com,81957553014,LOW,Recife,PE
+CUST-142,Mateus Ribeiro,mateus.ribeiro142@email.com,11997705310,HIGH,São Paulo,SP
+CUST-143,Ana Silva,ana.silva143@email.com,81955540424,MEDIUM,Recife,PE
+CUST-144,Ana Costa,ana.costa144@email.com,41935529407,LOW,Curitiba,PR
+CUST-145,Lucas Lima,lucas.lima145@email.com,31947385696,LOW,Belo Horizonte,MG
+CUST-146,Carlos Almeida,carlos.almeida146@email.com,21916789850,LOW,Rio de Janeiro,RJ
+CUST-147,João Oliveira,joao.oliveira147@email.com,41932321899,LOW,Curitiba,PR
+CUST-148,Paula Costa,paula.costa148@email.com,81917869910,LOW,Recife,PE
+CUST-149,João Lima,joao.lima149@email.com,51971070189,LOW,Porto Alegre,RS
+CUST-150,Paula Santos,paula.santos150@email.com,41949823450,LOW,Curitiba,PR
+CUST-151,Maria Rodrigues,maria.rodrigues151@email.com,11952091325,LOW,São Paulo,SP
+CUST-152,Paula Ferreira,paula.ferreira152@email.com,31917634247,HIGH,Belo Horizonte,MG
+CUST-153,Carlos Ribeiro,carlos.ribeiro153@email.com,31919196777,LOW,Belo Horizonte,MG
+CUST-154,Fernanda Lima,fernanda.lima154@email.com,21986460539,LOW,Rio de Janeiro,RJ
+CUST-155,Maria Rodrigues,maria.rodrigues155@email.com,21966267415,LOW,Rio de Janeiro,RJ
+CUST-156,Bruno Carvalho,bruno.carvalho156@email.com,51937415205,LOW,Porto Alegre,RS
+CUST-157,Bruno Costa,bruno.costa157@email.com,51963121477,LOW,Porto Alegre,RS
+CUST-158,Camila Almeida,camila.almeida158@email.com,71919736572,LOW,Salvador,BA
+CUST-159,Ana Oliveira,ana.oliveira159@email.com,41977898694,LOW,Curitiba,PR
+CUST-160,Larissa Carvalho,larissa.carvalho160@email.com,21942787299,LOW,Rio de Janeiro,RJ
+CUST-161,Juliana Almeida,juliana.almeida161@email.com,51992097999,HIGH,Porto Alegre,RS
+CUST-162,João Gomes,joao.gomes162@email.com,51999038526,LOW,Porto Alegre,RS
+CUST-163,Lucas Pereira,lucas.pereira163@email.com,21924366125,MEDIUM,Rio de Janeiro,RJ
+CUST-164,Lucas Pereira,lucas.pereira164@email.com,51991178885,LOW,Porto Alegre,RS
+CUST-165,Bruno Costa,bruno.costa165@email.com,51977834855,LOW,Porto Alegre,RS
+CUST-166,Maria Oliveira,maria.oliveira166@email.com,81947135391,LOW,Recife,PE
+CUST-167,Bruno Araújo,bruno.araujo167@email.com,31995511909,HIGH,Belo Horizonte,MG
+CUST-168,Juliana Martins,juliana.martins168@email.com,61984045292,MEDIUM,Brasília,DF
+CUST-169,João Oliveira,joao.oliveira169@email.com,21930005727,LOW,Rio de Janeiro,RJ
+CUST-170,Larissa Rodrigues,larissa.rodrigues170@email.com,31967684996,LOW,Belo Horizonte,MG
+CUST-171,Camila Souza,camila.souza171@email.com,11958024342,LOW,São Paulo,SP
+CUST-172,Fernanda Gomes,fernanda.gomes172@email.com,21957469942,MEDIUM,Rio de Janeiro,RJ
+CUST-173,Beatriz Rodrigues,beatriz.rodrigues173@email.com,31941774346,MEDIUM,Belo Horizonte,MG
+CUST-174,Juliana Carvalho,juliana.carvalho174@email.com,81913326769,LOW,Recife,PE
+CUST-175,Bruno Araújo,bruno.araujo175@email.com,81999913412,MEDIUM,Recife,PE
+CUST-176,Fernanda Pereira,fernanda.pereira176@email.com,31924508349,LOW,Belo Horizonte,MG
+CUST-177,Maria Ribeiro,maria.ribeiro177@email.com,61939854548,LOW,Brasília,DF
+CUST-178,Mateus Souza,mateus.souza178@email.com,51940547349,LOW,Porto Alegre,RS
+CUST-179,Pedro Lima,pedro.lima179@email.com,71947393469,MEDIUM,Salvador,BA
+CUST-180,Rafael Souza,rafael.souza180@email.com,81981969657,LOW,Recife,PE
+CUST-181,João Oliveira,joao.oliveira181@email.com,51933966966,LOW,Porto Alegre,RS
+CUST-182,Rafael Silva,rafael.silva182@email.com,21990070438,LOW,Rio de Janeiro,RJ
+CUST-183,Bruno Lima,bruno.lima183@email.com,21961700055,MEDIUM,Rio de Janeiro,RJ
+CUST-184,Pedro Pereira,pedro.pereira184@email.com,11968526649,LOW,São Paulo,SP
+CUST-185,Pedro Souza,pedro.souza185@email.com,81919391725,HIGH,Recife,PE
+CUST-186,Bruno Rodrigues,bruno.rodrigues186@email.com,71999038359,MEDIUM,Salvador,BA
+CUST-187,Camila Ferreira,camila.ferreira187@email.com,51999508850,LOW,Porto Alegre,RS
+CUST-188,Gabriel Martins,gabriel.martins188@email.com,51984411983,LOW,Porto Alegre,RS
+CUST-189,Beatriz Gomes,beatriz.gomes189@email.com,81933357554,LOW,Recife,PE
+CUST-190,Camila Lima,camila.lima190@email.com,11950785405,LOW,São Paulo,SP
+CUST-191,Beatriz Araújo,beatriz.araujo191@email.com,71972409658,LOW,Salvador,BA
+CUST-192,Pedro Ferreira,pedro.ferreira192@email.com,61932775593,LOW,Brasília,DF
+CUST-193,Camila Ferreira,camila.ferreira193@email.com,71922534217,MEDIUM,Salvador,BA
+CUST-194,Fernanda Gomes,fernanda.gomes194@email.com,51940150759,MEDIUM,Porto Alegre,RS
+CUST-195,Lucas Silva,lucas.silva195@email.com,11942862209,HIGH,São Paulo,SP
+CUST-196,Carlos Almeida,carlos.almeida196@email.com,81994525678,LOW,Recife,PE
+CUST-197,Gabriel Almeida,gabriel.almeida197@email.com,81942747037,LOW,Recife,PE
+CUST-198,João Carvalho,joao.carvalho198@email.com,21967062156,LOW,Rio de Janeiro,RJ
+CUST-199,Mateus Silva,mateus.silva199@email.com,41926288475,LOW,Curitiba,PR
+CUST-200,Mateus Gomes,mateus.gomes200@email.com,71969401199,LOW,Salvador,BA
+CUST-201,Beatriz Ribeiro,beatriz.ribeiro201@email.com,61931361812,MEDIUM,Brasília,DF
+CUST-202,Paula Almeida,paula.almeida202@email.com,51943183955,MEDIUM,Porto Alegre,RS
+CUST-203,Rafael Araújo,rafael.araujo203@email.com,61994120751,LOW,Brasília,DF
+CUST-204,Mateus Oliveira,mateus.oliveira204@email.com,51941473195,LOW,Porto Alegre,RS
+CUST-205,Bruno Carvalho,bruno.carvalho205@email.com,21928572252,LOW,Rio de Janeiro,RJ
+CUST-206,Gabriel Martins,gabriel.martins206@email.com,31938716269,LOW,Belo Horizonte,MG
+CUST-207,Beatriz Souza,beatriz.souza207@email.com,61965804273,LOW,Brasília,DF
+CUST-208,Beatriz Lima,beatriz.lima208@email.com,11987267850,LOW,São Paulo,SP
+CUST-209,João Souza,joao.souza209@email.com,51962343121,MEDIUM,Porto Alegre,RS
+CUST-210,Beatriz Ferreira,beatriz.ferreira210@email.com,41975529051,LOW,Curitiba,PR
+CUST-211,Beatriz Almeida,beatriz.almeida211@email.com,11962191530,LOW,São Paulo,SP
+CUST-212,Gabriel Martins,gabriel.martins212@email.com,31972732043,MEDIUM,Belo Horizonte,MG
+CUST-213,João Carvalho,joao.carvalho213@email.com,81989442503,LOW,Recife,PE
+CUST-214,João Oliveira,joao.oliveira214@email.com,81928213276,MEDIUM,Recife,PE
+CUST-215,Juliana Silva,juliana.silva215@email.com,51960882459,LOW,Porto Alegre,RS
+CUST-216,Mateus Souza,mateus.souza216@email.com,71960885459,LOW,Salvador,BA
+CUST-217,Beatriz Pereira,beatriz.pereira217@email.com,21973123515,LOW,Rio de Janeiro,RJ
+CUST-218,Maria Souza,maria.souza218@email.com,41997260863,LOW,Curitiba,PR
+CUST-219,Maria Araújo,maria.araujo219@email.com,11943189803,LOW,São Paulo,SP
+CUST-220,João Rodrigues,joao.rodrigues220@email.com,31942016960,LOW,Belo Horizonte,MG
+CUST-221,Ana Rodrigues,ana.rodrigues221@email.com,41972415804,LOW,Curitiba,PR
+CUST-222,Larissa Santos,larissa.santos222@email.com,21931980274,HIGH,Rio de Janeiro,RJ
+CUST-223,Ana Rodrigues,ana.rodrigues223@email.com,11951870192,LOW,São Paulo,SP
+CUST-224,Gabriel Lima,gabriel.lima224@email.com,41920200074,LOW,Curitiba,PR
+CUST-225,Fernanda Oliveira,fernanda.oliveira225@email.com,51990585882,MEDIUM,Porto Alegre,RS
+CUST-226,Maria Souza,maria.souza226@email.com,81998787891,LOW,Recife,PE
+CUST-227,Bruno Silva,bruno.silva227@email.com,81975793759,LOW,Recife,PE
+CUST-228,Larissa Gomes,larissa.gomes228@email.com,61930534124,LOW,Brasília,DF
+CUST-229,Rafael Rodrigues,rafael.rodrigues229@email.com,61972394301,LOW,Brasília,DF
+CUST-230,Rafael Souza,rafael.souza230@email.com,41921631697,LOW,Curitiba,PR
+CUST-231,Mateus Costa,mateus.costa231@email.com,61986483924,LOW,Brasília,DF
+CUST-232,Gabriel Souza,gabriel.souza232@email.com,11976344695,MEDIUM,São Paulo,SP
+CUST-233,Juliana Almeida,juliana.almeida233@email.com,41957623800,MEDIUM,Curitiba,PR
+CUST-234,Bruno Pereira,bruno.pereira234@email.com,51984597009,LOW,Porto Alegre,RS
+CUST-235,Pedro Oliveira,pedro.oliveira235@email.com,41964549859,LOW,Curitiba,PR
+CUST-236,Fernanda Martins,fernanda.martins236@email.com,61996691619,MEDIUM,Brasília,DF
+CUST-237,Mateus Araújo,mateus.araujo237@email.com,11922489409,LOW,São Paulo,SP
+CUST-238,Gabriel Martins,gabriel.martins238@email.com,41951098277,LOW,Curitiba,PR
+CUST-239,Larissa Almeida,larissa.almeida239@email.com,71967110154,HIGH,Salvador,BA
+CUST-240,Bruno Souza,bruno.souza240@email.com,61946361787,LOW,Brasília,DF
+CUST-241,Fernanda Oliveira,fernanda.oliveira241@email.com,41952352128,LOW,Curitiba,PR
+CUST-242,Juliana Costa,juliana.costa242@email.com,41974988034,LOW,Curitiba,PR
+CUST-243,Camila Oliveira,camila.oliveira243@email.com,41949761527,LOW,Curitiba,PR
+CUST-244,Juliana Pereira,juliana.pereira244@email.com,11981690398,LOW,São Paulo,SP
+CUST-245,Maria Silva,maria.silva245@email.com,51926948946,LOW,Porto Alegre,RS
+CUST-246,Paula Oliveira,paula.oliveira246@email.com,11987049595,LOW,São Paulo,SP
+CUST-247,Paula Almeida,paula.almeida247@email.com,71934744872,HIGH,Salvador,BA
+CUST-248,Rafael Ribeiro,rafael.ribeiro248@email.com,61925312516,MEDIUM,Brasília,DF
+CUST-249,Gabriel Almeida,gabriel.almeida249@email.com,21987446468,LOW,Rio de Janeiro,RJ
+CUST-250,Maria Santos,maria.santos250@email.com,31985543051,HIGH,Belo Horizonte,MG
+CUST-251,Carlos Costa,carlos.costa251@email.com,21984903294,MEDIUM,Rio de Janeiro,RJ
+CUST-252,Fernanda Araújo,fernanda.araujo252@email.com,81970467027,MEDIUM,Recife,PE
+CUST-253,Camila Ribeiro,camila.ribeiro253@email.com,81950987442,LOW,Recife,PE
+CUST-254,Maria Rodrigues,maria.rodrigues254@email.com,21937888820,LOW,Rio de Janeiro,RJ
+CUST-255,Rafael Gomes,rafael.gomes255@email.com,21931079846,LOW,Rio de Janeiro,RJ
+CUST-256,Carlos Santos,carlos.santos256@email.com,11964830300,LOW,São Paulo,SP
+CUST-257,Paula Pereira,paula.pereira257@email.com,11941068214,LOW,São Paulo,SP
+CUST-258,Camila Martins,camila.martins258@email.com,61919553585,LOW,Brasília,DF
+CUST-259,Rafael Araújo,rafael.araujo259@email.com,41967061186,LOW,Curitiba,PR
+CUST-260,Fernanda Gomes,fernanda.gomes260@email.com,31945652586,MEDIUM,Belo Horizonte,MG
+CUST-261,Carlos Silva,carlos.silva261@email.com,31951286958,LOW,Belo Horizonte,MG
+CUST-262,Camila Almeida,camila.almeida262@email.com,21972907576,LOW,Rio de Janeiro,RJ
+CUST-263,Gabriel Pereira,gabriel.pereira263@email.com,61968755000,LOW,Brasília,DF
+CUST-264,Maria Carvalho,maria.carvalho264@email.com,81953261270,LOW,Recife,PE
+CUST-265,João Oliveira,joao.oliveira265@email.com,41987201917,LOW,Curitiba,PR
+CUST-266,João Araújo,joao.araujo266@email.com,51987342561,LOW,Porto Alegre,RS
+CUST-267,Juliana Almeida,juliana.almeida267@email.com,61947333543,LOW,Brasília,DF
+CUST-268,Beatriz Gomes,beatriz.gomes268@email.com,61922246348,LOW,Brasília,DF
+CUST-269,Beatriz Souza,beatriz.souza269@email.com,71999943797,LOW,Salvador,BA
+CUST-270,Juliana Souza,juliana.souza270@email.com,81976500726,LOW,Recife,PE
+CUST-271,Gabriel Ribeiro,gabriel.ribeiro271@email.com,11971045700,LOW,São Paulo,SP
+CUST-272,Rafael Souza,rafael.souza272@email.com,21964247457,MEDIUM,Rio de Janeiro,RJ
+CUST-273,João Gomes,joao.gomes273@email.com,61965465150,LOW,Brasília,DF
+CUST-274,Larissa Rodrigues,larissa.rodrigues274@email.com,61993940940,LOW,Brasília,DF
+CUST-275,Maria Costa,maria.costa275@email.com,51983715012,LOW,Porto Alegre,RS
+CUST-276,Camila Almeida,camila.almeida276@email.com,61926297533,LOW,Brasília,DF
+CUST-277,Fernanda Martins,fernanda.martins277@email.com,31951708177,LOW,Belo Horizonte,MG
+CUST-278,Beatriz Oliveira,beatriz.oliveira278@email.com,41925228493,LOW,Curitiba,PR
+CUST-279,Ana Gomes,ana.gomes279@email.com,31976890827,HIGH,Belo Horizonte,MG
+CUST-280,Camila Ferreira,camila.ferreira280@email.com,51965766169,MEDIUM,Porto Alegre,RS
+CUST-281,Paula Costa,paula.costa281@email.com,61983989546,LOW,Brasília,DF
+CUST-282,Pedro Carvalho,pedro.carvalho282@email.com,31919369750,LOW,Belo Horizonte,MG
+CUST-283,Beatriz Souza,beatriz.souza283@email.com,51910344303,LOW,Porto Alegre,RS
+CUST-284,Camila Ribeiro,camila.ribeiro284@email.com,61929944139,LOW,Brasília,DF
+CUST-285,Paula Souza,paula.souza285@email.com,71984077101,MEDIUM,Salvador,BA
+CUST-286,Gabriel Almeida,gabriel.almeida286@email.com,71935320492,HIGH,Salvador,BA
+CUST-287,Fernanda Rodrigues,fernanda.rodrigues287@email.com,81941348220,MEDIUM,Recife,PE
+CUST-288,Beatriz Silva,beatriz.silva288@email.com,71973481797,MEDIUM,Salvador,BA
+CUST-289,Gabriel Lima,gabriel.lima289@email.com,31976481885,HIGH,Belo Horizonte,MG
+CUST-290,Lucas Ferreira,lucas.ferreira290@email.com,71923470708,MEDIUM,Salvador,BA
+CUST-291,Mateus Oliveira,mateus.oliveira291@email.com,61912059919,MEDIUM,Brasília,DF
+CUST-292,Beatriz Ribeiro,beatriz.ribeiro292@email.com,31920043277,LOW,Belo Horizonte,MG
+CUST-293,Rafael Souza,rafael.souza293@email.com,81997219599,LOW,Recife,PE
+CUST-294,Bruno Ribeiro,bruno.ribeiro294@email.com,81952501540,LOW,Recife,PE
+CUST-295,Paula Ribeiro,paula.ribeiro295@email.com,11992874006,LOW,São Paulo,SP
+CUST-296,Camila Costa,camila.costa296@email.com,21968246664,HIGH,Rio de Janeiro,RJ
+CUST-297,Ana Almeida,ana.almeida297@email.com,31950193656,MEDIUM,Belo Horizonte,MG
+CUST-298,Maria Souza,maria.souza298@email.com,11949375156,LOW,São Paulo,SP
+CUST-299,Beatriz Santos,beatriz.santos299@email.com,41981291936,LOW,Curitiba,PR
+CUST-300,Juliana Santos,juliana.santos300@email.com,31920598952,LOW,Belo Horizonte,MG
+CUST-301,Gabriel Rodrigues,gabriel.rodrigues301@email.com,41976795767,MEDIUM,Curitiba,PR
+CUST-302,Lucas Costa,lucas.costa302@email.com,61995618110,LOW,Brasília,DF
+CUST-303,Rafael Gomes,rafael.gomes303@email.com,11972445234,MEDIUM,São Paulo,SP
+CUST-304,Juliana Oliveira,juliana.oliveira304@email.com,61956381032,HIGH,Brasília,DF
+CUST-305,Camila Gomes,camila.gomes305@email.com,81943567615,LOW,Recife,PE
+CUST-306,Camila Costa,camila.costa306@email.com,81974855088,LOW,Recife,PE
+CUST-307,Gabriel Rodrigues,gabriel.rodrigues307@email.com,71987149951,LOW,Salvador,BA
+CUST-308,Camila Silva,camila.silva308@email.com,81946840133,LOW,Recife,PE
+CUST-309,Maria Carvalho,maria.carvalho309@email.com,61948412328,MEDIUM,Brasília,DF
+CUST-310,Fernanda Rodrigues,fernanda.rodrigues310@email.com,71939394291,LOW,Salvador,BA
+CUST-311,Rafael Gomes,rafael.gomes311@email.com,31994322033,LOW,Belo Horizonte,MG
+CUST-312,Maria Pereira,maria.pereira312@email.com,61914478111,LOW,Brasília,DF
+CUST-313,Lucas Oliveira,lucas.oliveira313@email.com,51953851498,MEDIUM,Porto Alegre,RS
+CUST-314,Juliana Costa,juliana.costa314@email.com,31982398083,MEDIUM,Belo Horizonte,MG
+CUST-315,Larissa Ferreira,larissa.ferreira315@email.com,51932084778,LOW,Porto Alegre,RS
+CUST-316,Paula Araújo,paula.araujo316@email.com,51955461591,MEDIUM,Porto Alegre,RS
+CUST-317,Mateus Oliveira,mateus.oliveira317@email.com,31940281491,MEDIUM,Belo Horizonte,MG
+CUST-318,Gabriel Ribeiro,gabriel.ribeiro318@email.com,71922120246,MEDIUM,Salvador,BA
+CUST-319,João Pereira,joao.pereira319@email.com,21971040347,LOW,Rio de Janeiro,RJ
+CUST-320,Rafael Rodrigues,rafael.rodrigues320@email.com,81995704631,HIGH,Recife,PE
+CUST-321,Ana Gomes,ana.gomes321@email.com,41973280554,LOW,Curitiba,PR
+CUST-322,Bruno Carvalho,bruno.carvalho322@email.com,41996926431,LOW,Curitiba,PR
+CUST-323,Mateus Carvalho,mateus.carvalho323@email.com,51997139443,LOW,Porto Alegre,RS
+CUST-324,Lucas Silva,lucas.silva324@email.com,11950851122,HIGH,São Paulo,SP
+CUST-325,Ana Oliveira,ana.oliveira325@email.com,41982148284,LOW,Curitiba,PR
+CUST-326,Mateus Souza,mateus.souza326@email.com,81988831486,MEDIUM,Recife,PE
+CUST-327,Lucas Carvalho,lucas.carvalho327@email.com,81997902129,LOW,Recife,PE
+CUST-328,Paula Rodrigues,paula.rodrigues328@email.com,81947546086,LOW,Recife,PE
+CUST-329,Larissa Costa,larissa.costa329@email.com,61969686067,HIGH,Brasília,DF
+CUST-330,Larissa Oliveira,larissa.oliveira330@email.com,71983076970,MEDIUM,Salvador,BA
+CUST-331,Larissa Silva,larissa.silva331@email.com,81947028180,LOW,Recife,PE
+CUST-332,Ana Ribeiro,ana.ribeiro332@email.com,61922304198,LOW,Brasília,DF
+CUST-333,João Silva,joao.silva333@email.com,71942691263,HIGH,Salvador,BA
+CUST-334,Pedro Oliveira,pedro.oliveira334@email.com,41988703005,LOW,Curitiba,PR
+CUST-335,Fernanda Souza,fernanda.souza335@email.com,31989991301,LOW,Belo Horizonte,MG
+CUST-336,Lucas Santos,lucas.santos336@email.com,51933420607,LOW,Porto Alegre,RS
+CUST-337,João Santos,joao.santos337@email.com,11958082464,MEDIUM,São Paulo,SP
+CUST-338,Fernanda Rodrigues,fernanda.rodrigues338@email.com,71912118101,LOW,Salvador,BA
+CUST-339,Maria Santos,maria.santos339@email.com,81980610004,LOW,Recife,PE
+CUST-340,Carlos Almeida,carlos.almeida340@email.com,61958592048,LOW,Brasília,DF
+CUST-341,Ana Almeida,ana.almeida341@email.com,41992558242,LOW,Curitiba,PR
+CUST-342,Camila Almeida,camila.almeida342@email.com,11918163847,HIGH,São Paulo,SP
+CUST-343,Gabriel Lima,gabriel.lima343@email.com,21975802771,MEDIUM,Rio de Janeiro,RJ
+CUST-344,Mateus Oliveira,mateus.oliveira344@email.com,21953233116,LOW,Rio de Janeiro,RJ
+CUST-345,Carlos Santos,carlos.santos345@email.com,51993794475,LOW,Porto Alegre,RS
+CUST-346,Bruno Lima,bruno.lima346@email.com,51970896652,LOW,Porto Alegre,RS
+CUST-347,Beatriz Oliveira,beatriz.oliveira347@email.com,21997874085,LOW,Rio de Janeiro,RJ
+CUST-348,Pedro Lima,pedro.lima348@email.com,61940667888,LOW,Brasília,DF
+CUST-349,Mateus Lima,mateus.lima349@email.com,81922762205,LOW,Recife,PE
+CUST-350,Bruno Gomes,bruno.gomes350@email.com,51960237832,HIGH,Porto Alegre,RS
+CUST-351,Paula Oliveira,paula.oliveira351@email.com,21921457410,LOW,Rio de Janeiro,RJ
+CUST-352,Ana Martins,ana.martins352@email.com,71927463800,LOW,Salvador,BA
+CUST-353,Bruno Gomes,bruno.gomes353@email.com,21965137801,LOW,Rio de Janeiro,RJ
+CUST-354,Beatriz Ribeiro,beatriz.ribeiro354@email.com,11948604965,LOW,São Paulo,SP
+CUST-355,Larissa Oliveira,larissa.oliveira355@email.com,41930767532,LOW,Curitiba,PR
+CUST-356,Fernanda Ribeiro,fernanda.ribeiro356@email.com,21956991504,MEDIUM,Rio de Janeiro,RJ
+CUST-357,Larissa Oliveira,larissa.oliveira357@email.com,51987054398,LOW,Porto Alegre,RS
+CUST-358,Beatriz Ribeiro,beatriz.ribeiro358@email.com,11991737913,HIGH,São Paulo,SP
+CUST-359,Rafael Silva,rafael.silva359@email.com,31946677730,MEDIUM,Belo Horizonte,MG
+CUST-360,Camila Carvalho,camila.carvalho360@email.com,71957113566,LOW,Salvador,BA
+CUST-361,Lucas Rodrigues,lucas.rodrigues361@email.com,81919339597,LOW,Recife,PE
+CUST-362,João Oliveira,joao.oliveira362@email.com,41960491958,LOW,Curitiba,PR
+CUST-363,Bruno Santos,bruno.santos363@email.com,71951827259,MEDIUM,Salvador,BA
+CUST-364,Carlos Carvalho,carlos.carvalho364@email.com,11930881581,LOW,São Paulo,SP
+CUST-365,Maria Gomes,maria.gomes365@email.com,21946521025,LOW,Rio de Janeiro,RJ
+CUST-366,Beatriz Almeida,beatriz.almeida366@email.com,61965590800,LOW,Brasília,DF
+CUST-367,Ana Souza,ana.souza367@email.com,81924883373,LOW,Recife,PE
+CUST-368,Paula Ferreira,paula.ferreira368@email.com,51916095815,LOW,Porto Alegre,RS
+CUST-369,Maria Silva,maria.silva369@email.com,41950455821,HIGH,Curitiba,PR
+CUST-370,Lucas Araújo,lucas.araujo370@email.com,51948848936,LOW,Porto Alegre,RS
+CUST-371,João Almeida,joao.almeida371@email.com,81933581357,LOW,Recife,PE
+CUST-372,Fernanda Ferreira,fernanda.ferreira372@email.com,71919673809,LOW,Salvador,BA
+CUST-373,Maria Lima,maria.lima373@email.com,11971707170,HIGH,São Paulo,SP
+CUST-374,Bruno Rodrigues,bruno.rodrigues374@email.com,81986960402,LOW,Recife,PE
+CUST-375,Beatriz Pereira,beatriz.pereira375@email.com,21964362516,LOW,Rio de Janeiro,RJ
+CUST-376,Bruno Santos,bruno.santos376@email.com,61958567046,LOW,Brasília,DF
+CUST-377,Ana Costa,ana.costa377@email.com,81989036966,LOW,Recife,PE
+CUST-378,Carlos Lima,carlos.lima378@email.com,51955568701,LOW,Porto Alegre,RS
+CUST-379,Juliana Oliveira,juliana.oliveira379@email.com,21981216573,LOW,Rio de Janeiro,RJ
+CUST-380,Larissa Souza,larissa.souza380@email.com,31941711468,LOW,Belo Horizonte,MG
+CUST-381,Rafael Costa,rafael.costa381@email.com,31990852623,LOW,Belo Horizonte,MG
+CUST-382,Carlos Santos,carlos.santos382@email.com,61972270726,MEDIUM,Brasília,DF
+CUST-383,Mateus Gomes,mateus.gomes383@email.com,71994183695,LOW,Salvador,BA
+CUST-384,Mateus Oliveira,mateus.oliveira384@email.com,61969352161,LOW,Brasília,DF
+CUST-385,Rafael Rodrigues,rafael.rodrigues385@email.com,11957236885,LOW,São Paulo,SP
+CUST-386,Camila Almeida,camila.almeida386@email.com,61915047559,LOW,Brasília,DF
+CUST-387,Camila Oliveira,camila.oliveira387@email.com,21992545028,LOW,Rio de Janeiro,RJ
+CUST-388,Gabriel Almeida,gabriel.almeida388@email.com,11970362235,MEDIUM,São Paulo,SP
+CUST-389,Pedro Souza,pedro.souza389@email.com,61977292380,LOW,Brasília,DF
+CUST-390,Maria Almeida,maria.almeida390@email.com,21956095437,HIGH,Rio de Janeiro,RJ
+CUST-391,Carlos Ferreira,carlos.ferreira391@email.com,31915253567,LOW,Belo Horizonte,MG
+CUST-392,Mateus Almeida,mateus.almeida392@email.com,31958841557,LOW,Belo Horizonte,MG
+CUST-393,Camila Lima,camila.lima393@email.com,81955414869,LOW,Recife,PE
+CUST-394,Maria Araújo,maria.araujo394@email.com,71918846539,LOW,Salvador,BA
+CUST-395,Gabriel Pereira,gabriel.pereira395@email.com,51998122539,HIGH,Porto Alegre,RS
+CUST-396,Lucas Souza,lucas.souza396@email.com,21988213973,LOW,Rio de Janeiro,RJ
+CUST-397,Larissa Pereira,larissa.pereira397@email.com,81927307598,LOW,Recife,PE
+CUST-398,Carlos Pereira,carlos.pereira398@email.com,81996368203,MEDIUM,Recife,PE
+CUST-399,Lucas Gomes,lucas.gomes399@email.com,21996707983,LOW,Rio de Janeiro,RJ
+CUST-400,Larissa Silva,larissa.silva400@email.com,71951455302,LOW,Salvador,BA
+CUST-401,Pedro Souza,pedro.souza401@email.com,61935770506,LOW,Brasília,DF
+CUST-402,Lucas Santos,lucas.santos402@email.com,21949700543,MEDIUM,Rio de Janeiro,RJ
+CUST-403,Ana Ferreira,ana.ferreira403@email.com,11998842638,LOW,São Paulo,SP
+CUST-404,Lucas Rodrigues,lucas.rodrigues404@email.com,81930703455,LOW,Recife,PE
+CUST-405,Juliana Martins,juliana.martins405@email.com,61915864298,LOW,Brasília,DF
+CUST-406,Fernanda Almeida,fernanda.almeida406@email.com,51970254091,LOW,Porto Alegre,RS
+CUST-407,Fernanda Pereira,fernanda.pereira407@email.com,61936040410,LOW,Brasília,DF
+CUST-408,Mateus Almeida,mateus.almeida408@email.com,51961254050,LOW,Porto Alegre,RS
+CUST-409,Beatriz Santos,beatriz.santos409@email.com,41991156554,LOW,Curitiba,PR
+CUST-410,Rafael Silva,rafael.silva410@email.com,61959823245,LOW,Brasília,DF
+CUST-411,Ana Martins,ana.martins411@email.com,21948260510,LOW,Rio de Janeiro,RJ
+CUST-412,Juliana Pereira,juliana.pereira412@email.com,61978901038,LOW,Brasília,DF
+CUST-413,Beatriz Oliveira,beatriz.oliveira413@email.com,41970549373,MEDIUM,Curitiba,PR
+CUST-414,João Lima,joao.lima414@email.com,11963211150,LOW,São Paulo,SP
+CUST-415,Fernanda Lima,fernanda.lima415@email.com,21960319927,LOW,Rio de Janeiro,RJ
+CUST-416,Bruno Carvalho,bruno.carvalho416@email.com,21997236246,LOW,Rio de Janeiro,RJ
+CUST-417,Lucas Santos,lucas.santos417@email.com,11948504300,MEDIUM,São Paulo,SP
+CUST-418,Paula Martins,paula.martins418@email.com,31972962895,LOW,Belo Horizonte,MG
+CUST-419,João Carvalho,joao.carvalho419@email.com,21912550658,LOW,Rio de Janeiro,RJ
+CUST-420,Lucas Ferreira,lucas.ferreira420@email.com,81924923247,MEDIUM,Recife,PE
+CUST-421,Fernanda Pereira,fernanda.pereira421@email.com,21916408822,LOW,Rio de Janeiro,RJ
+CUST-422,Mateus Oliveira,mateus.oliveira422@email.com,21977085942,LOW,Rio de Janeiro,RJ
+CUST-423,João Gomes,joao.gomes423@email.com,41929270557,LOW,Curitiba,PR
+CUST-424,João Rodrigues,joao.rodrigues424@email.com,71942287985,LOW,Salvador,BA
+CUST-425,Juliana Gomes,juliana.gomes425@email.com,21980260907,HIGH,Rio de Janeiro,RJ
+CUST-426,Carlos Ferreira,carlos.ferreira426@email.com,11962405812,MEDIUM,São Paulo,SP
+CUST-427,Maria Gomes,maria.gomes427@email.com,81960103798,LOW,Recife,PE
+CUST-428,João Souza,joao.souza428@email.com,21956278607,LOW,Rio de Janeiro,RJ
+CUST-429,Ana Araújo,ana.araujo429@email.com,71927905932,LOW,Salvador,BA
+CUST-430,Bruno Ribeiro,bruno.ribeiro430@email.com,31972360629,HIGH,Belo Horizonte,MG
+CUST-431,Paula Gomes,paula.gomes431@email.com,31928099607,LOW,Belo Horizonte,MG
+CUST-432,Mateus Silva,mateus.silva432@email.com,51937057085,LOW,Porto Alegre,RS
+CUST-433,Pedro Carvalho,pedro.carvalho433@email.com,11952358553,HIGH,São Paulo,SP
+CUST-434,Gabriel Ribeiro,gabriel.ribeiro434@email.com,61943999198,LOW,Brasília,DF
+CUST-435,Pedro Pereira,pedro.pereira435@email.com,71916416148,MEDIUM,Salvador,BA
+CUST-436,Bruno Pereira,bruno.pereira436@email.com,21959394697,LOW,Rio de Janeiro,RJ
+CUST-437,Gabriel Martins,gabriel.martins437@email.com,61961894582,LOW,Brasília,DF
+CUST-438,Juliana Almeida,juliana.almeida438@email.com,61959304469,HIGH,Brasília,DF
+CUST-439,Rafael Araújo,rafael.araujo439@email.com,21966975380,LOW,Rio de Janeiro,RJ
+CUST-440,Juliana Ferreira,juliana.ferreira440@email.com,51953112268,LOW,Porto Alegre,RS
+CUST-441,Bruno Gomes,bruno.gomes441@email.com,51951137177,LOW,Porto Alegre,RS
+CUST-442,Beatriz Santos,beatriz.santos442@email.com,61957183837,LOW,Brasília,DF
+CUST-443,Larissa Rodrigues,larissa.rodrigues443@email.com,81946850196,LOW,Recife,PE
+CUST-444,Maria Oliveira,maria.oliveira444@email.com,81958762794,LOW,Recife,PE
+CUST-445,Juliana Silva,juliana.silva445@email.com,31991547054,LOW,Belo Horizonte,MG
+CUST-446,Mateus Silva,mateus.silva446@email.com,31919023909,LOW,Belo Horizonte,MG
+CUST-447,Larissa Souza,larissa.souza447@email.com,81986134287,LOW,Recife,PE
+CUST-448,Lucas Gomes,lucas.gomes448@email.com,61959790013,LOW,Brasília,DF
+CUST-449,Carlos Rodrigues,carlos.rodrigues449@email.com,31981062902,LOW,Belo Horizonte,MG
+CUST-450,Bruno Gomes,bruno.gomes450@email.com,51943502308,HIGH,Porto Alegre,RS
+CUST-451,João Martins,joao.martins451@email.com,31976980546,LOW,Belo Horizonte,MG
+CUST-452,Ana Pereira,ana.pereira452@email.com,51969897763,LOW,Porto Alegre,RS
+CUST-453,Camila Martins,camila.martins453@email.com,61936867482,LOW,Brasília,DF
+CUST-454,Carlos Almeida,carlos.almeida454@email.com,31969741812,HIGH,Belo Horizonte,MG
+CUST-455,Bruno Gomes,bruno.gomes455@email.com,71918715975,LOW,Salvador,BA
+CUST-456,Camila Carvalho,camila.carvalho456@email.com,51931139996,MEDIUM,Porto Alegre,RS
+CUST-457,Juliana Araújo,juliana.araujo457@email.com,71978284040,LOW,Salvador,BA
+CUST-458,Pedro Araújo,pedro.araujo458@email.com,31941774192,MEDIUM,Belo Horizonte,MG
+CUST-459,João Souza,joao.souza459@email.com,71972734149,MEDIUM,Salvador,BA
+CUST-460,Lucas Rodrigues,lucas.rodrigues460@email.com,21918824561,LOW,Rio de Janeiro,RJ
+CUST-461,Paula Ferreira,paula.ferreira461@email.com,81964953237,MEDIUM,Recife,PE
+CUST-462,Carlos Santos,carlos.santos462@email.com,71996213226,LOW,Salvador,BA
+CUST-463,Mateus Gomes,mateus.gomes463@email.com,71927224779,MEDIUM,Salvador,BA
+CUST-464,Juliana Araújo,juliana.araujo464@email.com,31968065043,LOW,Belo Horizonte,MG
+CUST-465,Maria Ribeiro,maria.ribeiro465@email.com,21979538491,LOW,Rio de Janeiro,RJ
+CUST-466,Juliana Santos,juliana.santos466@email.com,71940262109,LOW,Salvador,BA
+CUST-467,Camila Ribeiro,camila.ribeiro467@email.com,21943635675,LOW,Rio de Janeiro,RJ
+CUST-468,Rafael Santos,rafael.santos468@email.com,51992467167,LOW,Porto Alegre,RS
+CUST-469,Juliana Rodrigues,juliana.rodrigues469@email.com,31932978158,LOW,Belo Horizonte,MG
+CUST-470,Bruno Ribeiro,bruno.ribeiro470@email.com,11913808225,LOW,São Paulo,SP
+CUST-471,Rafael Gomes,rafael.gomes471@email.com,41986790955,LOW,Curitiba,PR
+CUST-472,João Almeida,joao.almeida472@email.com,51996155337,HIGH,Porto Alegre,RS
+CUST-473,Paula Costa,paula.costa473@email.com,81949920898,LOW,Recife,PE
+CUST-474,Maria Santos,maria.santos474@email.com,61965783806,LOW,Brasília,DF
+CUST-475,Pedro Souza,pedro.souza475@email.com,31951954112,MEDIUM,Belo Horizonte,MG
+CUST-476,Bruno Martins,bruno.martins476@email.com,71963514837,LOW,Salvador,BA
+CUST-477,Larissa Ferreira,larissa.ferreira477@email.com,21952831009,LOW,Rio de Janeiro,RJ
+CUST-478,Ana Pereira,ana.pereira478@email.com,61943275109,LOW,Brasília,DF
+CUST-479,Maria Pereira,maria.pereira479@email.com,81992594562,LOW,Recife,PE
+CUST-480,Juliana Ribeiro,juliana.ribeiro480@email.com,71987535841,MEDIUM,Salvador,BA
+CUST-481,Pedro Araújo,pedro.araujo481@email.com,31976876068,HIGH,Belo Horizonte,MG
+CUST-482,Mateus Almeida,mateus.almeida482@email.com,51976755908,LOW,Porto Alegre,RS
+CUST-483,Gabriel Ferreira,gabriel.ferreira483@email.com,61942310051,LOW,Brasília,DF
+CUST-484,Larissa Silva,larissa.silva484@email.com,11947763008,LOW,São Paulo,SP
+CUST-485,Paula Pereira,paula.pereira485@email.com,11924428014,LOW,São Paulo,SP
+CUST-486,Rafael Martins,rafael.martins486@email.com,71964123845,LOW,Salvador,BA
+CUST-487,Gabriel Silva,gabriel.silva487@email.com,41958657117,LOW,Curitiba,PR
+CUST-488,Carlos Lima,carlos.lima488@email.com,61983800569,LOW,Brasília,DF
+CUST-489,Ana Santos,ana.santos489@email.com,21962868861,LOW,Rio de Janeiro,RJ
+CUST-490,Bruno Ferreira,bruno.ferreira490@email.com,71929363237,LOW,Salvador,BA
+CUST-491,Gabriel Ferreira,gabriel.ferreira491@email.com,11916080513,LOW,São Paulo,SP
+CUST-492,Bruno Araújo,bruno.araujo492@email.com,61979703656,LOW,Brasília,DF
+CUST-493,Lucas Souza,lucas.souza493@email.com,71931810655,LOW,Salvador,BA
+CUST-494,Camila Rodrigues,camila.rodrigues494@email.com,71978090664,MEDIUM,Salvador,BA
+CUST-495,Paula Martins,paula.martins495@email.com,51973739005,MEDIUM,Porto Alegre,RS
+CUST-496,Larissa Souza,larissa.souza496@email.com,21965907088,LOW,Rio de Janeiro,RJ
+CUST-497,João Rodrigues,joao.rodrigues497@email.com,61945638891,HIGH,Brasília,DF
+CUST-498,Fernanda Martins,fernanda.martins498@email.com,11988319168,LOW,São Paulo,SP
+CUST-499,Gabriel Santos,gabriel.santos499@email.com,41914237322,LOW,Curitiba,PR
+CUST-500,Ana Costa,ana.costa500@email.com,11969195194,LOW,São Paulo,SP
+CUST-501,Lucas Lima,lucas.lima501@email.com,41965079923,LOW,Curitiba,PR
+CUST-502,Paula Ribeiro,paula.ribeiro502@email.com,11928533117,LOW,São Paulo,SP
+CUST-503,Bruno Gomes,bruno.gomes503@email.com,61980528349,LOW,Brasília,DF
+CUST-504,Juliana Almeida,juliana.almeida504@email.com,71983319550,LOW,Salvador,BA
+CUST-505,Rafael Rodrigues,rafael.rodrigues505@email.com,61935805259,HIGH,Brasília,DF
+CUST-506,Rafael Ferreira,rafael.ferreira506@email.com,51940181142,HIGH,Porto Alegre,RS
+CUST-507,Camila Araújo,camila.araujo507@email.com,51937820354,LOW,Porto Alegre,RS
+CUST-508,Paula Souza,paula.souza508@email.com,61956815569,LOW,Brasília,DF
+CUST-509,Rafael Pereira,rafael.pereira509@email.com,21986970753,LOW,Rio de Janeiro,RJ
+CUST-510,Gabriel Carvalho,gabriel.carvalho510@email.com,81956323191,HIGH,Recife,PE
+CUST-511,Lucas Pereira,lucas.pereira511@email.com,11948605090,HIGH,São Paulo,SP
+CUST-512,Carlos Souza,carlos.souza512@email.com,61998043078,LOW,Brasília,DF
+CUST-513,Paula Costa,paula.costa513@email.com,41982286705,LOW,Curitiba,PR
+CUST-514,Rafael Santos,rafael.santos514@email.com,21992634772,MEDIUM,Rio de Janeiro,RJ
+CUST-515,Fernanda Costa,fernanda.costa515@email.com,11999903592,MEDIUM,São Paulo,SP
+CUST-516,Fernanda Gomes,fernanda.gomes516@email.com,41917045237,LOW,Curitiba,PR
+CUST-517,Bruno Martins,bruno.martins517@email.com,61923494908,LOW,Brasília,DF
+CUST-518,Lucas Silva,lucas.silva518@email.com,31964614193,LOW,Belo Horizonte,MG
+CUST-519,Paula Almeida,paula.almeida519@email.com,41948553376,LOW,Curitiba,PR
+CUST-520,Maria Carvalho,maria.carvalho520@email.com,21997550053,LOW,Rio de Janeiro,RJ
+CUST-521,Maria Carvalho,maria.carvalho521@email.com,31966087572,MEDIUM,Belo Horizonte,MG
+CUST-522,Juliana Carvalho,juliana.carvalho522@email.com,11963283709,MEDIUM,São Paulo,SP
+CUST-523,Juliana Carvalho,juliana.carvalho523@email.com,51915028625,LOW,Porto Alegre,RS
+CUST-524,Ana Carvalho,ana.carvalho524@email.com,71948193218,LOW,Salvador,BA
+CUST-525,Paula Carvalho,paula.carvalho525@email.com,31977674279,LOW,Belo Horizonte,MG
+CUST-526,Pedro Araújo,pedro.araujo526@email.com,21954383668,LOW,Rio de Janeiro,RJ
+CUST-527,Mateus Gomes,mateus.gomes527@email.com,51934991216,LOW,Porto Alegre,RS
+CUST-528,Bruno Araújo,bruno.araujo528@email.com,51986206305,LOW,Porto Alegre,RS
+CUST-529,Pedro Santos,pedro.santos529@email.com,81967405358,LOW,Recife,PE
+CUST-530,Carlos Lima,carlos.lima530@email.com,21934800912,HIGH,Rio de Janeiro,RJ
+CUST-531,Paula Souza,paula.souza531@email.com,41910916723,LOW,Curitiba,PR
+CUST-532,Fernanda Almeida,fernanda.almeida532@email.com,51954241559,LOW,Porto Alegre,RS
+CUST-533,João Pereira,joao.pereira533@email.com,71941715995,LOW,Salvador,BA
+CUST-534,Ana Almeida,ana.almeida534@email.com,51931436829,LOW,Porto Alegre,RS
+CUST-535,Camila Martins,camila.martins535@email.com,21995726382,MEDIUM,Rio de Janeiro,RJ
+CUST-536,Camila Souza,camila.souza536@email.com,41939410942,HIGH,Curitiba,PR
+CUST-537,Paula Santos,paula.santos537@email.com,61991300905,LOW,Brasília,DF
+CUST-538,Paula Araújo,paula.araujo538@email.com,41943214247,LOW,Curitiba,PR
+CUST-539,Carlos Ferreira,carlos.ferreira539@email.com,61980890196,MEDIUM,Brasília,DF
+CUST-540,Carlos Carvalho,carlos.carvalho540@email.com,21918289024,MEDIUM,Rio de Janeiro,RJ
+CUST-541,Pedro Rodrigues,pedro.rodrigues541@email.com,31932083803,LOW,Belo Horizonte,MG
+CUST-542,Mateus Oliveira,mateus.oliveira542@email.com,41988268756,LOW,Curitiba,PR
+CUST-543,Mateus Araújo,mateus.araujo543@email.com,11970858653,LOW,São Paulo,SP
+CUST-544,Beatriz Almeida,beatriz.almeida544@email.com,11985000490,LOW,São Paulo,SP
+CUST-545,Camila Martins,camila.martins545@email.com,11963143336,LOW,São Paulo,SP
+CUST-546,João Martins,joao.martins546@email.com,41987619624,LOW,Curitiba,PR
+CUST-547,Beatriz Souza,beatriz.souza547@email.com,21982633735,HIGH,Rio de Janeiro,RJ
+CUST-548,Carlos Carvalho,carlos.carvalho548@email.com,61914259382,LOW,Brasília,DF
+CUST-549,Juliana Araújo,juliana.araujo549@email.com,31996104027,HIGH,Belo Horizonte,MG
+CUST-550,Beatriz Souza,beatriz.souza550@email.com,81970201634,MEDIUM,Recife,PE
+CUST-551,Gabriel Lima,gabriel.lima551@email.com,21998824290,MEDIUM,Rio de Janeiro,RJ
+CUST-552,Lucas Gomes,lucas.gomes552@email.com,71925922674,LOW,Salvador,BA
+CUST-553,Gabriel Ferreira,gabriel.ferreira553@email.com,31939888974,MEDIUM,Belo Horizonte,MG
+CUST-554,João Pereira,joao.pereira554@email.com,61983074216,LOW,Brasília,DF
+CUST-555,Gabriel Ribeiro,gabriel.ribeiro555@email.com,41943220503,LOW,Curitiba,PR
+CUST-556,Lucas Pereira,lucas.pereira556@email.com,41925145751,LOW,Curitiba,PR
+CUST-557,Beatriz Rodrigues,beatriz.rodrigues557@email.com,11942301683,LOW,São Paulo,SP
+CUST-558,Ana Rodrigues,ana.rodrigues558@email.com,11969920305,LOW,São Paulo,SP
+CUST-559,Maria Costa,maria.costa559@email.com,11963991141,LOW,São Paulo,SP
+CUST-560,Pedro Araújo,pedro.araujo560@email.com,11928808678,LOW,São Paulo,SP
+CUST-561,Camila Costa,camila.costa561@email.com,71987507357,LOW,Salvador,BA
+CUST-562,Bruno Costa,bruno.costa562@email.com,51929228089,HIGH,Porto Alegre,RS
+CUST-563,Fernanda Lima,fernanda.lima563@email.com,51946930534,LOW,Porto Alegre,RS
+CUST-564,Juliana Gomes,juliana.gomes564@email.com,81984605013,LOW,Recife,PE
+CUST-565,Larissa Gomes,larissa.gomes565@email.com,81980392240,LOW,Recife,PE
+CUST-566,Beatriz Lima,beatriz.lima566@email.com,31950250352,LOW,Belo Horizonte,MG
+CUST-567,Paula Costa,paula.costa567@email.com,41950364158,MEDIUM,Curitiba,PR
+CUST-568,Lucas Araújo,lucas.araujo568@email.com,61917734153,LOW,Brasília,DF
+CUST-569,Beatriz Ferreira,beatriz.ferreira569@email.com,31962132722,LOW,Belo Horizonte,MG
+CUST-570,Pedro Souza,pedro.souza570@email.com,21970369365,MEDIUM,Rio de Janeiro,RJ
+CUST-571,Carlos Ferreira,carlos.ferreira571@email.com,41916917129,LOW,Curitiba,PR
+CUST-572,Maria Ribeiro,maria.ribeiro572@email.com,21935254849,MEDIUM,Rio de Janeiro,RJ
+CUST-573,Pedro Almeida,pedro.almeida573@email.com,41954689713,LOW,Curitiba,PR
+CUST-574,João Costa,joao.costa574@email.com,41925745913,MEDIUM,Curitiba,PR
+CUST-575,Paula Carvalho,paula.carvalho575@email.com,41991121400,MEDIUM,Curitiba,PR
+CUST-576,Gabriel Carvalho,gabriel.carvalho576@email.com,41984098828,LOW,Curitiba,PR
+CUST-577,Camila Lima,camila.lima577@email.com,61981625307,LOW,Brasília,DF
+CUST-578,Camila Pereira,camila.pereira578@email.com,71978829070,MEDIUM,Salvador,BA
+CUST-579,Mateus Oliveira,mateus.oliveira579@email.com,61952980983,MEDIUM,Brasília,DF
+CUST-580,Larissa Souza,larissa.souza580@email.com,81916135823,LOW,Recife,PE
+CUST-581,Fernanda Martins,fernanda.martins581@email.com,31912176998,LOW,Belo Horizonte,MG
+CUST-582,Beatriz Pereira,beatriz.pereira582@email.com,31936332415,LOW,Belo Horizonte,MG
+CUST-583,Gabriel Rodrigues,gabriel.rodrigues583@email.com,41977015110,LOW,Curitiba,PR
+CUST-584,Bruno Pereira,bruno.pereira584@email.com,61996126771,MEDIUM,Brasília,DF
+CUST-585,Mateus Santos,mateus.santos585@email.com,71932718459,LOW,Salvador,BA
+CUST-586,Paula Santos,paula.santos586@email.com,11980322629,LOW,São Paulo,SP
+CUST-587,Carlos Ribeiro,carlos.ribeiro587@email.com,11910856822,LOW,São Paulo,SP
+CUST-588,Fernanda Oliveira,fernanda.oliveira588@email.com,31911226946,LOW,Belo Horizonte,MG
+CUST-589,Mateus Souza,mateus.souza589@email.com,11992924441,LOW,São Paulo,SP
+CUST-590,Paula Gomes,paula.gomes590@email.com,61912111482,LOW,Brasília,DF
+CUST-591,Beatriz Silva,beatriz.silva591@email.com,11981057233,MEDIUM,São Paulo,SP
+CUST-592,Camila Silva,camila.silva592@email.com,81934060788,LOW,Recife,PE
+CUST-593,Ana Ferreira,ana.ferreira593@email.com,31942342289,LOW,Belo Horizonte,MG
+CUST-594,Rafael Ribeiro,rafael.ribeiro594@email.com,71945879718,MEDIUM,Salvador,BA
+CUST-595,Carlos Souza,carlos.souza595@email.com,81971605634,LOW,Recife,PE
+CUST-596,Fernanda Pereira,fernanda.pereira596@email.com,21997742922,HIGH,Rio de Janeiro,RJ
+CUST-597,Maria Oliveira,maria.oliveira597@email.com,81960903955,LOW,Recife,PE
+CUST-598,Paula Silva,paula.silva598@email.com,11933002714,LOW,São Paulo,SP
+CUST-599,Beatriz Gomes,beatriz.gomes599@email.com,71985947990,HIGH,Salvador,BA
+CUST-600,Ana Carvalho,ana.carvalho600@email.com,11940838737,LOW,São Paulo,SP
+CUST-601,Paula Pereira,paula.pereira601@email.com,11919978827,LOW,São Paulo,SP
+CUST-602,Rafael Carvalho,rafael.carvalho602@email.com,11934072553,HIGH,São Paulo,SP
+CUST-603,Bruno Silva,bruno.silva603@email.com,41988790652,LOW,Curitiba,PR
+CUST-604,Gabriel Carvalho,gabriel.carvalho604@email.com,21950168264,LOW,Rio de Janeiro,RJ
+CUST-605,Fernanda Rodrigues,fernanda.rodrigues605@email.com,81982553061,LOW,Recife,PE
+CUST-606,Lucas Araújo,lucas.araujo606@email.com,21977215278,MEDIUM,Rio de Janeiro,RJ
+CUST-607,Larissa Silva,larissa.silva607@email.com,21968664992,LOW,Rio de Janeiro,RJ
+CUST-608,Carlos Souza,carlos.souza608@email.com,81953805532,LOW,Recife,PE
+CUST-609,Rafael Araújo,rafael.araujo609@email.com,61975847681,LOW,Brasília,DF
+CUST-610,Gabriel Lima,gabriel.lima610@email.com,31988634827,LOW,Belo Horizonte,MG
+CUST-611,Carlos Araújo,carlos.araujo611@email.com,51943077929,MEDIUM,Porto Alegre,RS
+CUST-612,Carlos Pereira,carlos.pereira612@email.com,31961002735,MEDIUM,Belo Horizonte,MG
+CUST-613,Lucas Martins,lucas.martins613@email.com,81952503832,LOW,Recife,PE
+CUST-614,Carlos Silva,carlos.silva614@email.com,51969691437,LOW,Porto Alegre,RS
+CUST-615,Rafael Oliveira,rafael.oliveira615@email.com,31921716836,LOW,Belo Horizonte,MG
+CUST-616,Mateus Ferreira,mateus.ferreira616@email.com,81923863742,LOW,Recife,PE
+CUST-617,Larissa Ferreira,larissa.ferreira617@email.com,21990117857,LOW,Rio de Janeiro,RJ
+CUST-618,Bruno Ribeiro,bruno.ribeiro618@email.com,81911656329,LOW,Recife,PE
+CUST-619,Gabriel Araújo,gabriel.araujo619@email.com,21985099723,MEDIUM,Rio de Janeiro,RJ
+CUST-620,Fernanda Rodrigues,fernanda.rodrigues620@email.com,31961100987,LOW,Belo Horizonte,MG
+CUST-621,Rafael Pereira,rafael.pereira621@email.com,51976185975,LOW,Porto Alegre,RS
+CUST-622,Juliana Lima,juliana.lima622@email.com,51966519399,LOW,Porto Alegre,RS
+CUST-623,Carlos Souza,carlos.souza623@email.com,51943096758,MEDIUM,Porto Alegre,RS
+CUST-624,Paula Rodrigues,paula.rodrigues624@email.com,41971453148,LOW,Curitiba,PR
+CUST-625,Camila Silva,camila.silva625@email.com,81954589439,MEDIUM,Recife,PE
+CUST-626,Gabriel Araújo,gabriel.araujo626@email.com,71969085720,LOW,Salvador,BA
+CUST-627,Lucas Pereira,lucas.pereira627@email.com,71990961645,HIGH,Salvador,BA
+CUST-628,Pedro Almeida,pedro.almeida628@email.com,71933842070,HIGH,Salvador,BA
+CUST-629,Bruno Pereira,bruno.pereira629@email.com,61987293208,MEDIUM,Brasília,DF
+CUST-630,Bruno Lima,bruno.lima630@email.com,51962738860,LOW,Porto Alegre,RS
+CUST-631,Pedro Rodrigues,pedro.rodrigues631@email.com,31983833059,LOW,Belo Horizonte,MG
+CUST-632,Mateus Martins,mateus.martins632@email.com,41968848427,MEDIUM,Curitiba,PR
+CUST-633,Carlos Ribeiro,carlos.ribeiro633@email.com,81977015343,LOW,Recife,PE
+CUST-634,Camila Costa,camila.costa634@email.com,51998404247,LOW,Porto Alegre,RS
+CUST-635,Beatriz Araújo,beatriz.araujo635@email.com,81919927432,LOW,Recife,PE
+CUST-636,Paula Rodrigues,paula.rodrigues636@email.com,81981721578,LOW,Recife,PE
+CUST-637,Beatriz Ferreira,beatriz.ferreira637@email.com,11958255231,MEDIUM,São Paulo,SP
+CUST-638,Carlos Oliveira,carlos.oliveira638@email.com,41998261798,LOW,Curitiba,PR
+CUST-639,Juliana Gomes,juliana.gomes639@email.com,11985594147,HIGH,São Paulo,SP
+CUST-640,Gabriel Araújo,gabriel.araujo640@email.com,71967774765,LOW,Salvador,BA
+CUST-641,Ana Pereira,ana.pereira641@email.com,41978541804,MEDIUM,Curitiba,PR
+CUST-642,Fernanda Almeida,fernanda.almeida642@email.com,71962497139,LOW,Salvador,BA
+CUST-643,Lucas Souza,lucas.souza643@email.com,11974796438,LOW,São Paulo,SP
+CUST-644,Beatriz Carvalho,beatriz.carvalho644@email.com,21925578562,MEDIUM,Rio de Janeiro,RJ
+CUST-645,Lucas Souza,lucas.souza645@email.com,51956045630,LOW,Porto Alegre,RS
+CUST-646,Pedro Ferreira,pedro.ferreira646@email.com,61956748074,LOW,Brasília,DF
+CUST-647,Mateus Martins,mateus.martins647@email.com,61952803305,LOW,Brasília,DF
+CUST-648,Maria Araújo,maria.araujo648@email.com,21913031322,MEDIUM,Rio de Janeiro,RJ
+CUST-649,Ana Gomes,ana.gomes649@email.com,31942737441,LOW,Belo Horizonte,MG
+CUST-650,Juliana Souza,juliana.souza650@email.com,81972015859,LOW,Recife,PE
+CUST-651,Gabriel Gomes,gabriel.gomes651@email.com,31935016429,LOW,Belo Horizonte,MG
+CUST-652,Beatriz Lima,beatriz.lima652@email.com,11992424037,MEDIUM,São Paulo,SP
+CUST-653,Mateus Rodrigues,mateus.rodrigues653@email.com,81962188655,LOW,Recife,PE
+CUST-654,Pedro Costa,pedro.costa654@email.com,51918397164,LOW,Porto Alegre,RS
+CUST-655,Juliana Souza,juliana.souza655@email.com,71936450861,LOW,Salvador,BA
+CUST-656,Rafael Gomes,rafael.gomes656@email.com,61980828710,HIGH,Brasília,DF
+CUST-657,Bruno Rodrigues,bruno.rodrigues657@email.com,81992048427,LOW,Recife,PE
+CUST-658,Ana Souza,ana.souza658@email.com,71971453007,LOW,Salvador,BA
+CUST-659,Camila Carvalho,camila.carvalho659@email.com,21927978165,LOW,Rio de Janeiro,RJ
+CUST-660,Fernanda Pereira,fernanda.pereira660@email.com,21934567819,LOW,Rio de Janeiro,RJ
+CUST-661,Lucas Ferreira,lucas.ferreira661@email.com,81966135102,LOW,Recife,PE
+CUST-662,Gabriel Lima,gabriel.lima662@email.com,31975319770,LOW,Belo Horizonte,MG
+CUST-663,Juliana Ferreira,juliana.ferreira663@email.com,31975718640,LOW,Belo Horizonte,MG
+CUST-664,Juliana Souza,juliana.souza664@email.com,61993135800,LOW,Brasília,DF
+CUST-665,Larissa Silva,larissa.silva665@email.com,61928325379,LOW,Brasília,DF
+CUST-666,Gabriel Ferreira,gabriel.ferreira666@email.com,61964913082,LOW,Brasília,DF
+CUST-667,Beatriz Martins,beatriz.martins667@email.com,61975592138,LOW,Brasília,DF
+CUST-668,João Araújo,joao.araujo668@email.com,41949203644,LOW,Curitiba,PR
+CUST-669,Fernanda Ferreira,fernanda.ferreira669@email.com,51932576626,MEDIUM,Porto Alegre,RS
+CUST-670,Paula Ferreira,paula.ferreira670@email.com,21986868379,LOW,Rio de Janeiro,RJ
+CUST-671,Larissa Ferreira,larissa.ferreira671@email.com,11969239219,LOW,São Paulo,SP
+CUST-672,Beatriz Oliveira,beatriz.oliveira672@email.com,41949957816,MEDIUM,Curitiba,PR
+CUST-673,Maria Almeida,maria.almeida673@email.com,51956785209,MEDIUM,Porto Alegre,RS
+CUST-674,Carlos Almeida,carlos.almeida674@email.com,21941802361,LOW,Rio de Janeiro,RJ
+CUST-675,Larissa Ribeiro,larissa.ribeiro675@email.com,81932277675,LOW,Recife,PE
+CUST-676,Pedro Ribeiro,pedro.ribeiro676@email.com,41917966873,LOW,Curitiba,PR
+CUST-677,Rafael Rodrigues,rafael.rodrigues677@email.com,31953440052,HIGH,Belo Horizonte,MG
+CUST-678,Camila Pereira,camila.pereira678@email.com,51979043610,HIGH,Porto Alegre,RS
+CUST-679,Ana Santos,ana.santos679@email.com,81917957216,HIGH,Recife,PE
+CUST-680,Lucas Martins,lucas.martins680@email.com,31943511112,LOW,Belo Horizonte,MG
+CUST-681,Bruno Ribeiro,bruno.ribeiro681@email.com,41962707402,LOW,Curitiba,PR
+CUST-682,Rafael Gomes,rafael.gomes682@email.com,81960354777,LOW,Recife,PE
+CUST-683,Carlos Lima,carlos.lima683@email.com,51959535894,LOW,Porto Alegre,RS
+CUST-684,Paula Souza,paula.souza684@email.com,11922501261,MEDIUM,São Paulo,SP
+CUST-685,Mateus Gomes,mateus.gomes685@email.com,71918500100,MEDIUM,Salvador,BA
+CUST-686,Gabriel Costa,gabriel.costa686@email.com,81938434222,LOW,Recife,PE
+CUST-687,Bruno Ribeiro,bruno.ribeiro687@email.com,51955332729,LOW,Porto Alegre,RS
+CUST-688,Lucas Rodrigues,lucas.rodrigues688@email.com,61956135950,MEDIUM,Brasília,DF
+CUST-689,Maria Silva,maria.silva689@email.com,21994044392,MEDIUM,Rio de Janeiro,RJ
+CUST-690,Mateus Silva,mateus.silva690@email.com,21931204188,LOW,Rio de Janeiro,RJ
+CUST-691,João Lima,joao.lima691@email.com,41927705074,MEDIUM,Curitiba,PR
+CUST-692,Camila Santos,camila.santos692@email.com,51922527880,LOW,Porto Alegre,RS
+CUST-693,Rafael Oliveira,rafael.oliveira693@email.com,71999188862,MEDIUM,Salvador,BA
+CUST-694,Juliana Silva,juliana.silva694@email.com,81993967184,LOW,Recife,PE
+CUST-695,Fernanda Lima,fernanda.lima695@email.com,21922775337,LOW,Rio de Janeiro,RJ
+CUST-696,Paula Oliveira,paula.oliveira696@email.com,31989682313,LOW,Belo Horizonte,MG
+CUST-697,Mateus Silva,mateus.silva697@email.com,11956113741,MEDIUM,São Paulo,SP
+CUST-698,Beatriz Martins,beatriz.martins698@email.com,31974115841,LOW,Belo Horizonte,MG
+CUST-699,Gabriel Oliveira,gabriel.oliveira699@email.com,21923851475,LOW,Rio de Janeiro,RJ
+CUST-700,Camila Santos,camila.santos700@email.com,81927870584,LOW,Recife,PE
+CUST-701,Lucas Oliveira,lucas.oliveira701@email.com,11991915661,LOW,São Paulo,SP
+CUST-702,Mateus Souza,mateus.souza702@email.com,41994299475,MEDIUM,Curitiba,PR
+CUST-703,Beatriz Rodrigues,beatriz.rodrigues703@email.com,61939158087,LOW,Brasília,DF
+CUST-704,Ana Santos,ana.santos704@email.com,21989131271,MEDIUM,Rio de Janeiro,RJ
+CUST-705,Larissa Lima,larissa.lima705@email.com,71928767690,LOW,Salvador,BA
+CUST-706,Carlos Costa,carlos.costa706@email.com,51913600310,MEDIUM,Porto Alegre,RS
+CUST-707,Camila Costa,camila.costa707@email.com,41962579931,LOW,Curitiba,PR
+CUST-708,Maria Araújo,maria.araujo708@email.com,41976422705,LOW,Curitiba,PR
+CUST-709,Fernanda Almeida,fernanda.almeida709@email.com,21980905413,MEDIUM,Rio de Janeiro,RJ
+CUST-710,João Souza,joao.souza710@email.com,71927714442,LOW,Salvador,BA
+CUST-711,Beatriz Souza,beatriz.souza711@email.com,31973218512,HIGH,Belo Horizonte,MG
+CUST-712,Carlos Silva,carlos.silva712@email.com,21911851322,LOW,Rio de Janeiro,RJ
+CUST-713,Maria Carvalho,maria.carvalho713@email.com,11963415303,LOW,São Paulo,SP
+CUST-714,Beatriz Lima,beatriz.lima714@email.com,81921063273,LOW,Recife,PE
+CUST-715,Lucas Pereira,lucas.pereira715@email.com,21951594998,LOW,Rio de Janeiro,RJ
+CUST-716,Pedro Araújo,pedro.araujo716@email.com,31981993070,LOW,Belo Horizonte,MG
+CUST-717,Carlos Pereira,carlos.pereira717@email.com,81942029368,LOW,Recife,PE
+CUST-718,Carlos Carvalho,carlos.carvalho718@email.com,81925567455,LOW,Recife,PE
+CUST-719,Maria Pereira,maria.pereira719@email.com,31926031369,LOW,Belo Horizonte,MG
+CUST-720,Lucas Martins,lucas.martins720@email.com,11931989243,LOW,São Paulo,SP
+CUST-721,Larissa Ferreira,larissa.ferreira721@email.com,51932409388,LOW,Porto Alegre,RS
+CUST-722,Rafael Martins,rafael.martins722@email.com,21913940129,LOW,Rio de Janeiro,RJ
+CUST-723,Beatriz Pereira,beatriz.pereira723@email.com,21945292504,MEDIUM,Rio de Janeiro,RJ
+CUST-724,Carlos Almeida,carlos.almeida724@email.com,61978555983,LOW,Brasília,DF
+CUST-725,Paula Ribeiro,paula.ribeiro725@email.com,31959350218,LOW,Belo Horizonte,MG
+CUST-726,Ana Carvalho,ana.carvalho726@email.com,21940655922,MEDIUM,Rio de Janeiro,RJ
+CUST-727,João Silva,joao.silva727@email.com,11942823140,LOW,São Paulo,SP
+CUST-728,Larissa Lima,larissa.lima728@email.com,31934019729,HIGH,Belo Horizonte,MG
+CUST-729,Maria Ferreira,maria.ferreira729@email.com,81940133935,LOW,Recife,PE
+CUST-730,Beatriz Carvalho,beatriz.carvalho730@email.com,71946407626,MEDIUM,Salvador,BA
+CUST-731,Larissa Oliveira,larissa.oliveira731@email.com,11934071191,LOW,São Paulo,SP
+CUST-732,Maria Lima,maria.lima732@email.com,21972423883,MEDIUM,Rio de Janeiro,RJ
+CUST-733,Camila Souza,camila.souza733@email.com,21984234670,LOW,Rio de Janeiro,RJ
+CUST-734,Larissa Costa,larissa.costa734@email.com,51985672859,MEDIUM,Porto Alegre,RS
+CUST-735,Fernanda Almeida,fernanda.almeida735@email.com,71989415412,HIGH,Salvador,BA
+CUST-736,Pedro Martins,pedro.martins736@email.com,41930208677,LOW,Curitiba,PR
+CUST-737,Beatriz Silva,beatriz.silva737@email.com,41982684966,LOW,Curitiba,PR
+CUST-738,João Souza,joao.souza738@email.com,11998221829,LOW,São Paulo,SP
+CUST-739,Camila Oliveira,camila.oliveira739@email.com,41981110496,HIGH,Curitiba,PR
+CUST-740,Beatriz Almeida,beatriz.almeida740@email.com,11929109045,MEDIUM,São Paulo,SP
+CUST-741,Carlos Silva,carlos.silva741@email.com,41979760901,LOW,Curitiba,PR
+CUST-742,Larissa Almeida,larissa.almeida742@email.com,21987949714,LOW,Rio de Janeiro,RJ
+CUST-743,Lucas Gomes,lucas.gomes743@email.com,81920043577,LOW,Recife,PE
+CUST-744,Maria Lima,maria.lima744@email.com,31941778964,LOW,Belo Horizonte,MG
+CUST-745,Bruno Carvalho,bruno.carvalho745@email.com,81953788744,LOW,Recife,PE
+CUST-746,Rafael Costa,rafael.costa746@email.com,21937207628,LOW,Rio de Janeiro,RJ
+CUST-747,Ana Santos,ana.santos747@email.com,21932062036,LOW,Rio de Janeiro,RJ
+CUST-748,Bruno Lima,bruno.lima748@email.com,21981930575,LOW,Rio de Janeiro,RJ
+CUST-749,Pedro Almeida,pedro.almeida749@email.com,51972189327,LOW,Porto Alegre,RS
+CUST-750,Ana Oliveira,ana.oliveira750@email.com,31950831043,MEDIUM,Belo Horizonte,MG
+CUST-751,Maria Costa,maria.costa751@email.com,71929907683,LOW,Salvador,BA
+CUST-752,Fernanda Souza,fernanda.souza752@email.com,81978915391,LOW,Recife,PE
+CUST-753,Camila Pereira,camila.pereira753@email.com,31914171767,HIGH,Belo Horizonte,MG
+CUST-754,Mateus Ferreira,mateus.ferreira754@email.com,41922713811,LOW,Curitiba,PR
+CUST-755,Lucas Oliveira,lucas.oliveira755@email.com,11918277097,MEDIUM,São Paulo,SP
+CUST-756,Fernanda Santos,fernanda.santos756@email.com,41963765180,LOW,Curitiba,PR
+CUST-757,Carlos Rodrigues,carlos.rodrigues757@email.com,51920064609,LOW,Porto Alegre,RS
+CUST-758,Carlos Costa,carlos.costa758@email.com,61927286109,LOW,Brasília,DF
+CUST-759,Bruno Oliveira,bruno.oliveira759@email.com,11971873691,LOW,São Paulo,SP
+CUST-760,Beatriz Ribeiro,beatriz.ribeiro760@email.com,81976588957,LOW,Recife,PE
+CUST-761,Beatriz Santos,beatriz.santos761@email.com,71938818707,MEDIUM,Salvador,BA
+CUST-762,Rafael Pereira,rafael.pereira762@email.com,61929948970,LOW,Brasília,DF
+CUST-763,Fernanda Gomes,fernanda.gomes763@email.com,51976960098,LOW,Porto Alegre,RS
+CUST-764,Paula Silva,paula.silva764@email.com,21947550897,LOW,Rio de Janeiro,RJ
+CUST-765,Beatriz Costa,beatriz.costa765@email.com,41994658420,HIGH,Curitiba,PR
+CUST-766,João Lima,joao.lima766@email.com,71974382155,LOW,Salvador,BA
+CUST-767,Paula Souza,paula.souza767@email.com,71962127652,LOW,Salvador,BA
+CUST-768,João Souza,joao.souza768@email.com,41913933043,MEDIUM,Curitiba,PR
+CUST-769,Rafael Silva,rafael.silva769@email.com,61981059199,LOW,Brasília,DF
+CUST-770,Fernanda Santos,fernanda.santos770@email.com,21943266810,LOW,Rio de Janeiro,RJ
+CUST-771,Rafael Ferreira,rafael.ferreira771@email.com,11939448924,LOW,São Paulo,SP
+CUST-772,Gabriel Souza,gabriel.souza772@email.com,31933635791,LOW,Belo Horizonte,MG
+CUST-773,Bruno Araújo,bruno.araujo773@email.com,71989398174,LOW,Salvador,BA
+CUST-774,Larissa Rodrigues,larissa.rodrigues774@email.com,31985579195,HIGH,Belo Horizonte,MG
+CUST-775,Paula Ferreira,paula.ferreira775@email.com,51933562830,LOW,Porto Alegre,RS
+CUST-776,Carlos Silva,carlos.silva776@email.com,41990753812,LOW,Curitiba,PR
+CUST-777,Paula Silva,paula.silva777@email.com,71992427773,LOW,Salvador,BA
+CUST-778,Lucas Souza,lucas.souza778@email.com,31953431355,LOW,Belo Horizonte,MG
+CUST-779,Lucas Rodrigues,lucas.rodrigues779@email.com,31924887509,MEDIUM,Belo Horizonte,MG
+CUST-780,Larissa Oliveira,larissa.oliveira780@email.com,71998870866,LOW,Salvador,BA
+CUST-781,Ana Souza,ana.souza781@email.com,51953299069,LOW,Porto Alegre,RS
+CUST-782,Juliana Martins,juliana.martins782@email.com,81995800828,HIGH,Recife,PE
+CUST-783,Bruno Santos,bruno.santos783@email.com,71939962391,LOW,Salvador,BA
+CUST-784,Juliana Lima,juliana.lima784@email.com,51949529438,LOW,Porto Alegre,RS
+CUST-785,João Martins,joao.martins785@email.com,81986166246,LOW,Recife,PE
+CUST-786,Bruno Carvalho,bruno.carvalho786@email.com,41995851936,LOW,Curitiba,PR
+CUST-787,Paula Santos,paula.santos787@email.com,71920443030,LOW,Salvador,BA
+CUST-788,Bruno Santos,bruno.santos788@email.com,21999929175,LOW,Rio de Janeiro,RJ
+CUST-789,Bruno Almeida,bruno.almeida789@email.com,11945596211,LOW,São Paulo,SP
+CUST-790,Carlos Souza,carlos.souza790@email.com,51924500158,MEDIUM,Porto Alegre,RS
+CUST-791,Maria Lima,maria.lima791@email.com,61966324902,HIGH,Brasília,DF
+CUST-792,Beatriz Almeida,beatriz.almeida792@email.com,81957141449,LOW,Recife,PE
+CUST-793,Ana Ribeiro,ana.ribeiro793@email.com,61987585294,LOW,Brasília,DF
+CUST-794,Fernanda Santos,fernanda.santos794@email.com,61919893106,MEDIUM,Brasília,DF
+CUST-795,Maria Pereira,maria.pereira795@email.com,11952777459,LOW,São Paulo,SP
+CUST-796,Ana Oliveira,ana.oliveira796@email.com,71932831133,MEDIUM,Salvador,BA
+CUST-797,Juliana Martins,juliana.martins797@email.com,21983423305,HIGH,Rio de Janeiro,RJ
+CUST-798,Carlos Souza,carlos.souza798@email.com,61914159837,LOW,Brasília,DF
+CUST-799,Juliana Rodrigues,juliana.rodrigues799@email.com,81931086112,LOW,Recife,PE
+CUST-800,Bruno Costa,bruno.costa800@email.com,41964932613,LOW,Curitiba,PR
+CUST-801,Rafael Gomes,rafael.gomes801@email.com,51949916439,LOW,Porto Alegre,RS
+CUST-802,Maria Lima,maria.lima802@email.com,61930614492,LOW,Brasília,DF
+CUST-803,João Lima,joao.lima803@email.com,21949533757,MEDIUM,Rio de Janeiro,RJ
+CUST-804,Paula Costa,paula.costa804@email.com,21913454186,LOW,Rio de Janeiro,RJ
+CUST-805,Camila Oliveira,camila.oliveira805@email.com,61925503345,LOW,Brasília,DF
+CUST-806,Gabriel Almeida,gabriel.almeida806@email.com,61998723294,LOW,Brasília,DF
+CUST-807,Gabriel Santos,gabriel.santos807@email.com,71961196706,LOW,Salvador,BA
+CUST-808,Mateus Silva,mateus.silva808@email.com,51969020960,LOW,Porto Alegre,RS
+CUST-809,Fernanda Ribeiro,fernanda.ribeiro809@email.com,51985731895,LOW,Porto Alegre,RS
+CUST-810,Ana Oliveira,ana.oliveira810@email.com,71982672055,LOW,Salvador,BA
+CUST-811,Fernanda Ferreira,fernanda.ferreira811@email.com,11961956500,MEDIUM,São Paulo,SP
+CUST-812,Beatriz Ferreira,beatriz.ferreira812@email.com,61986868410,MEDIUM,Brasília,DF
+CUST-813,Paula Pereira,paula.pereira813@email.com,21962989744,MEDIUM,Rio de Janeiro,RJ
+CUST-814,Maria Ferreira,maria.ferreira814@email.com,31926143959,HIGH,Belo Horizonte,MG
+CUST-815,Mateus Santos,mateus.santos815@email.com,31938439415,MEDIUM,Belo Horizonte,MG
+CUST-816,Lucas Silva,lucas.silva816@email.com,81920518444,HIGH,Recife,PE
+CUST-817,Beatriz Costa,beatriz.costa817@email.com,31989865944,LOW,Belo Horizonte,MG
+CUST-818,Carlos Oliveira,carlos.oliveira818@email.com,81984673939,LOW,Recife,PE
+CUST-819,Bruno Ribeiro,bruno.ribeiro819@email.com,51979751366,LOW,Porto Alegre,RS
+CUST-820,João Araújo,joao.araujo820@email.com,81925102023,LOW,Recife,PE
+CUST-821,Lucas Rodrigues,lucas.rodrigues821@email.com,21924178065,LOW,Rio de Janeiro,RJ
+CUST-822,Ana Araújo,ana.araujo822@email.com,51981891508,MEDIUM,Porto Alegre,RS
+CUST-823,Beatriz Pereira,beatriz.pereira823@email.com,81997884113,LOW,Recife,PE
+CUST-824,Paula Silva,paula.silva824@email.com,31946965460,LOW,Belo Horizonte,MG
+CUST-825,Gabriel Silva,gabriel.silva825@email.com,81954492381,LOW,Recife,PE
+CUST-826,Maria Martins,maria.martins826@email.com,61946048781,MEDIUM,Brasília,DF
+CUST-827,João Souza,joao.souza827@email.com,51951734908,LOW,Porto Alegre,RS
+CUST-828,Paula Ribeiro,paula.ribeiro828@email.com,21940595926,LOW,Rio de Janeiro,RJ
+CUST-829,Mateus Araújo,mateus.araujo829@email.com,71946160937,MEDIUM,Salvador,BA
+CUST-830,Carlos Costa,carlos.costa830@email.com,61938372352,MEDIUM,Brasília,DF
+CUST-831,Beatriz Martins,beatriz.martins831@email.com,61979323646,MEDIUM,Brasília,DF
+CUST-832,Maria Ferreira,maria.ferreira832@email.com,31918806960,LOW,Belo Horizonte,MG
+CUST-833,Gabriel Santos,gabriel.santos833@email.com,11933318633,LOW,São Paulo,SP
+CUST-834,Pedro Ribeiro,pedro.ribeiro834@email.com,11943486016,LOW,São Paulo,SP
+CUST-835,Maria Carvalho,maria.carvalho835@email.com,71936724061,LOW,Salvador,BA
+CUST-836,Mateus Ferreira,mateus.ferreira836@email.com,81995283260,HIGH,Recife,PE
+CUST-837,João Costa,joao.costa837@email.com,71975603845,LOW,Salvador,BA
+CUST-838,Juliana Ribeiro,juliana.ribeiro838@email.com,61988769733,LOW,Brasília,DF
+CUST-839,Larissa Santos,larissa.santos839@email.com,51922132198,LOW,Porto Alegre,RS
+CUST-840,Gabriel Silva,gabriel.silva840@email.com,31986807176,MEDIUM,Belo Horizonte,MG
+CUST-841,Pedro Ribeiro,pedro.ribeiro841@email.com,41996889858,LOW,Curitiba,PR
+CUST-842,Pedro Pereira,pedro.pereira842@email.com,81978891441,LOW,Recife,PE
+CUST-843,João Almeida,joao.almeida843@email.com,31996888739,LOW,Belo Horizonte,MG
+CUST-844,João Costa,joao.costa844@email.com,51991650533,MEDIUM,Porto Alegre,RS
+CUST-845,Camila Martins,camila.martins845@email.com,51966882385,MEDIUM,Porto Alegre,RS
+CUST-846,Larissa Almeida,larissa.almeida846@email.com,51939287523,LOW,Porto Alegre,RS
+CUST-847,Gabriel Rodrigues,gabriel.rodrigues847@email.com,21910986174,LOW,Rio de Janeiro,RJ
+CUST-848,Larissa Ferreira,larissa.ferreira848@email.com,51950060760,LOW,Porto Alegre,RS
+CUST-849,Paula Oliveira,paula.oliveira849@email.com,71947108953,LOW,Salvador,BA
+CUST-850,Rafael Pereira,rafael.pereira850@email.com,51935281262,LOW,Porto Alegre,RS
+CUST-851,Fernanda Carvalho,fernanda.carvalho851@email.com,11990535106,LOW,São Paulo,SP
+CUST-852,Bruno Gomes,bruno.gomes852@email.com,31913416548,LOW,Belo Horizonte,MG
+CUST-853,Camila Pereira,camila.pereira853@email.com,81964304344,LOW,Recife,PE
+CUST-854,Maria Rodrigues,maria.rodrigues854@email.com,41956059101,MEDIUM,Curitiba,PR
+CUST-855,Fernanda Gomes,fernanda.gomes855@email.com,61958116670,LOW,Brasília,DF
+CUST-856,Juliana Ribeiro,juliana.ribeiro856@email.com,31949431028,LOW,Belo Horizonte,MG
+CUST-857,Lucas Martins,lucas.martins857@email.com,51985031958,MEDIUM,Porto Alegre,RS
+CUST-858,Juliana Gomes,juliana.gomes858@email.com,71997836731,LOW,Salvador,BA
+CUST-859,Larissa Costa,larissa.costa859@email.com,51966434872,MEDIUM,Porto Alegre,RS
+CUST-860,Bruno Souza,bruno.souza860@email.com,51988593968,LOW,Porto Alegre,RS
+CUST-861,Ana Almeida,ana.almeida861@email.com,11995147289,LOW,São Paulo,SP
+CUST-862,Carlos Almeida,carlos.almeida862@email.com,41977172936,LOW,Curitiba,PR
+CUST-863,Gabriel Ferreira,gabriel.ferreira863@email.com,51965446317,LOW,Porto Alegre,RS
+CUST-864,Lucas Santos,lucas.santos864@email.com,41955992373,LOW,Curitiba,PR
+CUST-865,Mateus Santos,mateus.santos865@email.com,71934207075,MEDIUM,Salvador,BA
+CUST-866,Paula Souza,paula.souza866@email.com,31952065724,LOW,Belo Horizonte,MG
+CUST-867,João Almeida,joao.almeida867@email.com,51938102825,MEDIUM,Porto Alegre,RS
+CUST-868,Juliana Rodrigues,juliana.rodrigues868@email.com,31975709924,MEDIUM,Belo Horizonte,MG
+CUST-869,Carlos Santos,carlos.santos869@email.com,81995025258,LOW,Recife,PE
+CUST-870,Beatriz Almeida,beatriz.almeida870@email.com,81910626681,LOW,Recife,PE
+CUST-871,Pedro Martins,pedro.martins871@email.com,71911889398,MEDIUM,Salvador,BA
+CUST-872,Pedro Silva,pedro.silva872@email.com,11994112495,MEDIUM,São Paulo,SP
+CUST-873,Fernanda Martins,fernanda.martins873@email.com,71951888314,LOW,Salvador,BA
+CUST-874,Gabriel Ferreira,gabriel.ferreira874@email.com,51932417070,LOW,Porto Alegre,RS
+CUST-875,Maria Pereira,maria.pereira875@email.com,51971193393,MEDIUM,Porto Alegre,RS
+CUST-876,Bruno Lima,bruno.lima876@email.com,31956000822,HIGH,Belo Horizonte,MG
+CUST-877,Paula Souza,paula.souza877@email.com,41932130289,HIGH,Curitiba,PR
+CUST-878,Gabriel Silva,gabriel.silva878@email.com,41940107903,MEDIUM,Curitiba,PR
+CUST-879,Lucas Costa,lucas.costa879@email.com,11989147232,LOW,São Paulo,SP
+CUST-880,Ana Souza,ana.souza880@email.com,11960357475,MEDIUM,São Paulo,SP
+CUST-881,Rafael Araújo,rafael.araujo881@email.com,11989715138,HIGH,São Paulo,SP
+CUST-882,Ana Gomes,ana.gomes882@email.com,11916473999,LOW,São Paulo,SP
+CUST-883,Beatriz Almeida,beatriz.almeida883@email.com,81926588648,LOW,Recife,PE
+CUST-884,Paula Martins,paula.martins884@email.com,31937581060,LOW,Belo Horizonte,MG
+CUST-885,João Pereira,joao.pereira885@email.com,81998807116,LOW,Recife,PE
+CUST-886,Rafael Rodrigues,rafael.rodrigues886@email.com,31966213840,MEDIUM,Belo Horizonte,MG
+CUST-887,Ana Ferreira,ana.ferreira887@email.com,21947944260,LOW,Rio de Janeiro,RJ
+CUST-888,Ana Almeida,ana.almeida888@email.com,41991738839,LOW,Curitiba,PR
+CUST-889,Rafael Ribeiro,rafael.ribeiro889@email.com,41958039455,MEDIUM,Curitiba,PR
+CUST-890,Camila Santos,camila.santos890@email.com,11983569939,LOW,São Paulo,SP
+CUST-891,Pedro Martins,pedro.martins891@email.com,61954372866,LOW,Brasília,DF
+CUST-892,João Gomes,joao.gomes892@email.com,21924821786,MEDIUM,Rio de Janeiro,RJ
+CUST-893,Paula Santos,paula.santos893@email.com,21978679929,LOW,Rio de Janeiro,RJ
+CUST-894,Ana Carvalho,ana.carvalho894@email.com,51996481420,LOW,Porto Alegre,RS
+CUST-895,Camila Pereira,camila.pereira895@email.com,61916721650,LOW,Brasília,DF
+CUST-896,Juliana Ribeiro,juliana.ribeiro896@email.com,11948999266,LOW,São Paulo,SP
+CUST-897,Bruno Lima,bruno.lima897@email.com,21922750478,MEDIUM,Rio de Janeiro,RJ
+CUST-898,Maria Silva,maria.silva898@email.com,31999034004,LOW,Belo Horizonte,MG
+CUST-899,Bruno Souza,bruno.souza899@email.com,61993457527,LOW,Brasília,DF
+CUST-900,Carlos Souza,carlos.souza900@email.com,71934544318,LOW,Salvador,BA
+CUST-901,Gabriel Almeida,gabriel.almeida901@email.com,51961769856,LOW,Porto Alegre,RS
+CUST-902,Paula Araújo,paula.araujo902@email.com,81997086700,MEDIUM,Recife,PE
+CUST-903,Juliana Oliveira,juliana.oliveira903@email.com,31917871385,HIGH,Belo Horizonte,MG
+CUST-904,Juliana Oliveira,juliana.oliveira904@email.com,81989289163,LOW,Recife,PE
+CUST-905,Mateus Santos,mateus.santos905@email.com,81958130331,LOW,Recife,PE
+CUST-906,Lucas Almeida,lucas.almeida906@email.com,61925158211,MEDIUM,Brasília,DF
+CUST-907,Mateus Silva,mateus.silva907@email.com,21945113084,LOW,Rio de Janeiro,RJ
+CUST-908,João Martins,joao.martins908@email.com,41999904987,MEDIUM,Curitiba,PR
+CUST-909,Ana Lima,ana.lima909@email.com,41974683506,LOW,Curitiba,PR
+CUST-910,Gabriel Santos,gabriel.santos910@email.com,11911562947,LOW,São Paulo,SP
+CUST-911,Juliana Ferreira,juliana.ferreira911@email.com,61976549837,MEDIUM,Brasília,DF
+CUST-912,Carlos Araújo,carlos.araujo912@email.com,61953034742,LOW,Brasília,DF
+CUST-913,Rafael Silva,rafael.silva913@email.com,41983886264,LOW,Curitiba,PR
+CUST-914,Gabriel Ribeiro,gabriel.ribeiro914@email.com,41920580463,LOW,Curitiba,PR
+CUST-915,Mateus Oliveira,mateus.oliveira915@email.com,61970004467,LOW,Brasília,DF
+CUST-916,Paula Martins,paula.martins916@email.com,11923776553,LOW,São Paulo,SP
+CUST-917,Maria Ferreira,maria.ferreira917@email.com,11922199793,MEDIUM,São Paulo,SP
+CUST-918,Camila Carvalho,camila.carvalho918@email.com,41997858385,LOW,Curitiba,PR
+CUST-919,Bruno Souza,bruno.souza919@email.com,11939919562,MEDIUM,São Paulo,SP
+CUST-920,Bruno Ferreira,bruno.ferreira920@email.com,61998203489,LOW,Brasília,DF
+CUST-921,Mateus Oliveira,mateus.oliveira921@email.com,21998437437,LOW,Rio de Janeiro,RJ
+CUST-922,Bruno Souza,bruno.souza922@email.com,51983509785,LOW,Porto Alegre,RS
+CUST-923,Ana Silva,ana.silva923@email.com,31976091781,LOW,Belo Horizonte,MG
+CUST-924,Beatriz Oliveira,beatriz.oliveira924@email.com,51991987136,LOW,Porto Alegre,RS
+CUST-925,Ana Carvalho,ana.carvalho925@email.com,81938935933,LOW,Recife,PE
+CUST-926,Pedro Martins,pedro.martins926@email.com,71924464073,MEDIUM,Salvador,BA
+CUST-927,Maria Carvalho,maria.carvalho927@email.com,21970465703,LOW,Rio de Janeiro,RJ
+CUST-928,Lucas Almeida,lucas.almeida928@email.com,11981184297,MEDIUM,São Paulo,SP
+CUST-929,Beatriz Ribeiro,beatriz.ribeiro929@email.com,61978227286,MEDIUM,Brasília,DF
+CUST-930,Juliana Martins,juliana.martins930@email.com,31927231111,LOW,Belo Horizonte,MG
+CUST-931,Bruno Ferreira,bruno.ferreira931@email.com,81966192230,HIGH,Recife,PE
+CUST-932,Fernanda Pereira,fernanda.pereira932@email.com,81956017729,HIGH,Recife,PE
+CUST-933,Mateus Araújo,mateus.araujo933@email.com,31928546206,LOW,Belo Horizonte,MG
+CUST-934,Camila Ribeiro,camila.ribeiro934@email.com,71984300459,LOW,Salvador,BA
+CUST-935,Pedro Costa,pedro.costa935@email.com,51956344519,HIGH,Porto Alegre,RS
+CUST-936,Lucas Martins,lucas.martins936@email.com,31977631432,LOW,Belo Horizonte,MG
+CUST-937,Bruno Martins,bruno.martins937@email.com,21957276557,LOW,Rio de Janeiro,RJ
+CUST-938,Beatriz Gomes,beatriz.gomes938@email.com,51966691738,MEDIUM,Porto Alegre,RS
+CUST-939,Ana Silva,ana.silva939@email.com,81929505421,LOW,Recife,PE
+CUST-940,Maria Costa,maria.costa940@email.com,51931600382,HIGH,Porto Alegre,RS
+CUST-941,Rafael Santos,rafael.santos941@email.com,11949613096,LOW,São Paulo,SP
+CUST-942,Maria Souza,maria.souza942@email.com,61923754633,LOW,Brasília,DF
+CUST-943,Fernanda Martins,fernanda.martins943@email.com,81941889524,LOW,Recife,PE
+CUST-944,Camila Martins,camila.martins944@email.com,11961215153,LOW,São Paulo,SP
+CUST-945,Bruno Ferreira,bruno.ferreira945@email.com,11911740164,MEDIUM,São Paulo,SP
+CUST-946,Pedro Rodrigues,pedro.rodrigues946@email.com,61940272606,MEDIUM,Brasília,DF
+CUST-947,Larissa Araújo,larissa.araujo947@email.com,41935970823,LOW,Curitiba,PR
+CUST-948,Juliana Gomes,juliana.gomes948@email.com,21935095571,HIGH,Rio de Janeiro,RJ
+CUST-949,Ana Lima,ana.lima949@email.com,11967513345,LOW,São Paulo,SP
+CUST-950,Rafael Santos,rafael.santos950@email.com,31988381281,MEDIUM,Belo Horizonte,MG
+CUST-951,João Souza,joao.souza951@email.com,61930777669,LOW,Brasília,DF
+CUST-952,Bruno Rodrigues,bruno.rodrigues952@email.com,11993935292,LOW,São Paulo,SP
+CUST-953,Camila Almeida,camila.almeida953@email.com,71919781894,MEDIUM,Salvador,BA
+CUST-954,Bruno Ferreira,bruno.ferreira954@email.com,41934678492,LOW,Curitiba,PR
+CUST-955,Juliana Lima,juliana.lima955@email.com,81922340723,LOW,Recife,PE
+CUST-956,Pedro Gomes,pedro.gomes956@email.com,71954434998,LOW,Salvador,BA
+CUST-957,Pedro Araújo,pedro.araujo957@email.com,61985341065,MEDIUM,Brasília,DF
+CUST-958,João Oliveira,joao.oliveira958@email.com,71969816445,LOW,Salvador,BA
+CUST-959,Fernanda Silva,fernanda.silva959@email.com,71961186964,MEDIUM,Salvador,BA
+CUST-960,Ana Lima,ana.lima960@email.com,51982509424,MEDIUM,Porto Alegre,RS
+CUST-961,João Carvalho,joao.carvalho961@email.com,71979029393,MEDIUM,Salvador,BA
+CUST-962,Mateus Almeida,mateus.almeida962@email.com,11949786693,MEDIUM,São Paulo,SP
+CUST-963,Pedro Souza,pedro.souza963@email.com,21922879054,LOW,Rio de Janeiro,RJ
+CUST-964,João Gomes,joao.gomes964@email.com,21938290610,LOW,Rio de Janeiro,RJ
+CUST-965,Pedro Ribeiro,pedro.ribeiro965@email.com,81923948820,LOW,Recife,PE
+CUST-966,Beatriz Gomes,beatriz.gomes966@email.com,21930636590,LOW,Rio de Janeiro,RJ
+CUST-967,Bruno Silva,bruno.silva967@email.com,21919831184,LOW,Rio de Janeiro,RJ
+CUST-968,Rafael Ferreira,rafael.ferreira968@email.com,21987170132,MEDIUM,Rio de Janeiro,RJ
+CUST-969,Rafael Lima,rafael.lima969@email.com,81970549061,LOW,Recife,PE
+CUST-970,Beatriz Souza,beatriz.souza970@email.com,11962278055,LOW,São Paulo,SP
+CUST-971,João Gomes,joao.gomes971@email.com,21988598977,LOW,Rio de Janeiro,RJ
+CUST-972,Carlos Souza,carlos.souza972@email.com,21948901209,MEDIUM,Rio de Janeiro,RJ
+CUST-973,Camila Rodrigues,camila.rodrigues973@email.com,21947784631,MEDIUM,Rio de Janeiro,RJ
+CUST-974,Mateus Lima,mateus.lima974@email.com,81998680762,LOW,Recife,PE
+CUST-975,Juliana Ferreira,juliana.ferreira975@email.com,41928304809,MEDIUM,Curitiba,PR
+CUST-976,Camila Gomes,camila.gomes976@email.com,31950004466,LOW,Belo Horizonte,MG
+CUST-977,Larissa Silva,larissa.silva977@email.com,31926540343,LOW,Belo Horizonte,MG
+CUST-978,Gabriel Ferreira,gabriel.ferreira978@email.com,21950894954,LOW,Rio de Janeiro,RJ
+CUST-979,Larissa Costa,larissa.costa979@email.com,81996695458,MEDIUM,Recife,PE
+CUST-980,Lucas Santos,lucas.santos980@email.com,31939633659,LOW,Belo Horizonte,MG
+CUST-981,Rafael Costa,rafael.costa981@email.com,21934341456,LOW,Rio de Janeiro,RJ
+CUST-982,Maria Ribeiro,maria.ribeiro982@email.com,61996526748,LOW,Brasília,DF
+CUST-983,Camila Gomes,camila.gomes983@email.com,21943646722,LOW,Rio de Janeiro,RJ
+CUST-984,Paula Souza,paula.souza984@email.com,71927208745,LOW,Salvador,BA
+CUST-985,Fernanda Oliveira,fernanda.oliveira985@email.com,51993150000,LOW,Porto Alegre,RS
+CUST-986,Pedro Souza,pedro.souza986@email.com,61970484679,LOW,Brasília,DF
+CUST-987,Camila Martins,camila.martins987@email.com,31985907105,LOW,Belo Horizonte,MG
+CUST-988,Bruno Lima,bruno.lima988@email.com,31910648524,LOW,Belo Horizonte,MG
+CUST-989,Fernanda Martins,fernanda.martins989@email.com,81947135338,MEDIUM,Recife,PE
+CUST-990,Lucas Gomes,lucas.gomes990@email.com,71974418331,LOW,Salvador,BA
+CUST-991,Larissa Araújo,larissa.araujo991@email.com,51975360192,LOW,Porto Alegre,RS
+CUST-992,Juliana Gomes,juliana.gomes992@email.com,21947663633,MEDIUM,Rio de Janeiro,RJ
+CUST-993,Lucas Carvalho,lucas.carvalho993@email.com,41945330756,MEDIUM,Curitiba,PR
+CUST-994,Carlos Martins,carlos.martins994@email.com,21912500515,MEDIUM,Rio de Janeiro,RJ
+CUST-995,João Ribeiro,joao.ribeiro995@email.com,81989193333,LOW,Recife,PE
+CUST-996,Maria Ferreira,maria.ferreira996@email.com,51982943217,MEDIUM,Porto Alegre,RS
+CUST-997,Paula Gomes,paula.gomes997@email.com,31959099345,LOW,Belo Horizonte,MG
+CUST-998,Camila Santos,camila.santos998@email.com,61977259613,LOW,Brasília,DF
+CUST-999,Gabriel Souza,gabriel.souza999@email.com,11998943201,LOW,São Paulo,SP

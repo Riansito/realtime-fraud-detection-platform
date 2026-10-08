@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+from datetime import datetime
 
 import asyncpg
 import structlog
@@ -82,6 +83,9 @@ async def consume_alerts():
             )
             fraud_reason = payload.get("fraud_reason", "Score exceeded threshold")
             event_time = payload.get("event_time")
+            if isinstance(event_time, str):
+                # Spark serializa como ISO-8601 com 'Z'; asyncpg exige datetime
+                event_time = datetime.fromisoformat(event_time.replace("Z", "+00:00"))
 
             logger.info(
                 "received_alert", transaction_id=transaction_id, risk_score=risk_score

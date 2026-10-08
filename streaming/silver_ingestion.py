@@ -1,7 +1,17 @@
 import os
 
 import structlog
-from pyspark.sql.functions import col, current_timestamp, from_json, hour, lit, when
+from pyspark.sql.functions import (
+    col,
+    current_timestamp,
+    from_json,
+    hour,
+    lit,
+    struct,
+    to_date,
+    to_json,
+    when,
+)
 from pyspark.sql.types import (
     DoubleType,
     StringType,
@@ -181,12 +191,8 @@ def write_silver_stream(silver_stream_df):
                 f"Data Quality Error: Found {invalid_currencies} rows with invalid currency in Silver!"
             )
 
-            # Cria a partição event_date fisicamente
-            from pyspark.sql.functions import date_format
-
-            valid_df = valid_df.withColumn(
-                "event_date", date_format(col("event_time"), "yyyy-MM-dd")
-            )
+            # Cria a coluna event_date (DATE no Postgres)
+            valid_df = valid_df.withColumn("event_date", to_date(col("event_time")))
 
             # --- ENGINE DE FRAUDE: Regra 3 (BACK-021) - Heurística de Alta Velocidade ---
             # Avalia ataques de força bruta contando o número de transações da mesma conta neste micro-lote
@@ -224,9 +230,18 @@ def write_silver_stream(silver_stream_df):
                 .drop("tx_count_batch")
             )  # Limpa a coluna temporária
 
-            valid_df.write.format("delta").mode("append").partitionBy(
-                "event_date"
-            ).save(SILVER_PATH)
+            # Salva no DW (Postgres) via JDBC para alimentar a camada Silver
+            jdbc_url = f"jdbc:postgresql://{os.getenv('POSTGRES_HOST', 'localhost')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB', 'postgres')}?sslmode={os.getenv('POSTGRES_SSLMODE', 'require')}&stringtype=unspecified"
+            
+            valid_df.write \
+                .format("jdbc") \
+                .option("url", jdbc_url) \
+                .option("dbtable", "silver.transactions") \
+                .option("user", os.getenv("POSTGRES_USER", "postgres")) \
+                .option("password", os.getenv("POSTGRES_PASSWORD", "postgres")) \
+                .option("driver", "org.postgresql.Driver") \
+                .mode("append") \
+                .save()
 
             # --- ENGINE DE FRAUDE: Publicação de Alertas em Tempo Real (BACK-024) ---
             # Se identificamos fraude (is_fraud_suspect == True), não esperamos o dbt/Gold Layer.
@@ -239,7 +254,7 @@ def write_silver_stream(silver_stream_df):
                     col("transaction_id").alias(
                         "key"
                     ),  # Usa transaction_id como Partition Key
-                    col("to_json(struct(*))").alias(
+                    to_json(struct(*alerts_df.columns)).alias(
                         "value"
                     ),  # Todo o row formatado como JSON
                 )
