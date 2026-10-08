@@ -68,7 +68,8 @@ if __name__ == "__main__":
     print("Bronze stream read logic created successfully.")
     
     # Inicia a escrita (bloqueia o terminal enquanto escuta o stream)
-    # query = write_bronze_stream(bronze_stream_df)
-    # query.awaitTermination()
+    query = write_bronze_stream(bronze_stream_df)
     
-    bronze_stream_df.printSchema()
+    # bronze_stream_df.printSchema()
+    
+    query.awaitTermination()

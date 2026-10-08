@@ -1,0 +1,6 @@
+merchant_id,merchant_name,category,country,created_at
+MERCH-001,Supermercado Central,retail,BR,2021-01-15 08:30:00
+MERCH-002,Crypto Exchange Binance,crypto,US,2022-05-20 10:15:00
+MERCH-003,Joalheria Ouro Fino,jewelry,BR,2019-11-05 14:45:00
+MERCH-004,Bet365,gambling,UK,2020-02-10 16:20:00
+MERCH-005,Amazon Brasil,ecommerce,BR,2018-08-01 09:00:00
