@@ -35,6 +35,15 @@ class ActionRequest(BaseModel):
     status: str
     operator_notes: Optional[str] = None
 
+class CustomerRiskProfile(BaseModel):
+    customer_id: str
+    full_name: Optional[str]
+    email: Optional[str]
+    risk_profile: Optional[str]
+    valid_from: datetime
+    valid_to: Optional[datetime]
+    is_current: Optional[bool]
+
 # Database connection pool reference
 db_pool = None
 
@@ -130,3 +139,28 @@ async def triage_alert(transaction_id: str, action: ActionRequest):
         raise HTTPException(status_code=404, detail="Alert not found")
         
     return dict(record)
+
+@app.get("/api/v1/analytics/customers/{customer_id}/risk-profile", response_model=List[CustomerRiskProfile])
+async def get_customer_risk_profile(customer_id: str):
+    """
+    Retorna o histórico do perfil de risco (SCD 2) de um cliente da camada analítica (Gold).
+    """
+    if not db_pool:
+        raise HTTPException(status_code=500, detail="Database connection pool is not initialized")
+        
+    query = """
+        SELECT customer_id, full_name, email, risk_profile,
+               dbt_valid_from AS valid_from, dbt_valid_to AS valid_to,
+               (dbt_valid_to IS NULL) AS is_current
+        FROM gold.dim_customer
+        WHERE customer_id = $1
+        ORDER BY dbt_valid_from DESC
+    """
+    
+    async with db_pool.acquire() as conn:
+        records = await conn.fetch(query, customer_id)
+        
+    if not records:
+        raise HTTPException(status_code=404, detail="Customer not found in analytics layer")
+        
+    return [dict(record) for record in records]
