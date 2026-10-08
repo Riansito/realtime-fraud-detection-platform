@@ -1,7 +1,14 @@
 import os
+
 import structlog
-from pyspark.sql.functions import col, from_json, when, lit, current_timestamp, hour
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType
+from pyspark.sql.functions import col, current_timestamp, from_json, hour, lit, when
+from pyspark.sql.types import (
+    DoubleType,
+    StringType,
+    StructField,
+    StructType,
+    TimestampType,
+)
 from session import get_spark_session
 
 structlog.configure(
@@ -148,8 +155,9 @@ def write_silver_stream(silver_stream_df):
             
             # --- ENGINE DE FRAUDE: Regra 3 (BACK-021) - Heurística de Alta Velocidade ---
             # Avalia ataques de força bruta contando o número de transações da mesma conta neste micro-lote
+            from pyspark.sql.functions import count as spark_count
+            from pyspark.sql.functions import least
             from pyspark.sql.window import Window
-            from pyspark.sql.functions import count as spark_count, least
             
             window_spec = Window.partitionBy("account_id")
             valid_df = valid_df.withColumn("tx_count_batch", spark_count("transaction_id").over(window_spec))
@@ -181,7 +189,6 @@ def write_silver_stream(silver_stream_df):
             alerts_df = valid_df.filter(col("is_fraud_suspect") == True)
             
             if not alerts_df.isEmpty():
-                from pyspark.sql.functions import struct, to_json
                 # Kafka exige chave (key) e valor (value) em String/Binary
                 kafka_alerts = alerts_df.select(
                     col("transaction_id").alias("key"), # Usa transaction_id como Partition Key

@@ -1,13 +1,13 @@
 import os
+from contextlib import asynccontextmanager
+from datetime import datetime
+
 import asyncpg
+import structlog
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import List, Optional
-from datetime import datetime
-import structlog
-from dotenv import load_dotenv
-from contextlib import asynccontextmanager
 
 load_dotenv()
 
@@ -37,23 +37,23 @@ class AlertResponse(BaseModel):
     risk_level: str
     fraud_reason: str
     status: str
-    operator_notes: Optional[str] = None
+    operator_notes: str | None = None
     event_time: datetime
     created_at: datetime
     updated_at: datetime
 
 class ActionRequest(BaseModel):
     status: str
-    operator_notes: Optional[str] = None
+    operator_notes: str | None = None
 
 class CustomerRiskProfile(BaseModel):
     customer_id: str
-    full_name: Optional[str]
-    email: Optional[str]
-    risk_profile: Optional[str]
+    full_name: str | None
+    email: str | None
+    risk_profile: str | None
     valid_from: datetime
-    valid_to: Optional[datetime]
-    is_current: Optional[bool]
+    valid_to: datetime | None
+    is_current: bool | None
 
 class FraudMetrics(BaseModel):
     total_transactions: int
@@ -67,7 +67,7 @@ db_pool = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global db_pool
-    ssl_context = False if DB_SSLMODE == "disable" else True
+    ssl_context = DB_SSLMODE != "disable"
     db_pool = await asyncpg.create_pool(
         host=DB_HOST,
         port=DB_PORT,
@@ -86,7 +86,7 @@ app = FastAPI(title="Fraud Detection Operational API", lifespan=lifespan)
 # Mount static files for the UI
 app.mount("/ui", StaticFiles(directory="api/static", html=True), name="static")
 
-@app.get("/api/v1/alerts", response_model=List[AlertResponse])
+@app.get("/api/v1/alerts", response_model=list[AlertResponse])
 async def get_recent_alerts(status: str = "PENDING", limit: int = 50):
     """
     Consulta transações suspeitas recentes, filtradas por status (ex: PENDING).
@@ -162,7 +162,7 @@ async def triage_alert(transaction_id: str, action: ActionRequest):
         
     return dict(record)
 
-@app.get("/api/v1/analytics/customers/{customer_id}/risk-profile", response_model=List[CustomerRiskProfile])
+@app.get("/api/v1/analytics/customers/{customer_id}/risk-profile", response_model=list[CustomerRiskProfile])
 async def get_customer_risk_profile(customer_id: str):
     """
     Retorna o histórico do perfil de risco (SCD 2) de um cliente da camada analítica (Gold).

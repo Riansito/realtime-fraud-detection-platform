@@ -1,4 +1,5 @@
 import os
+
 import boto3
 from dotenv import load_dotenv
 
@@ -23,7 +24,7 @@ def create_lakehouse_bucket():
         # Cria o bucket
         s3.create_bucket(Bucket=bucket)
         print(f"Sucesso! Bucket '{bucket}' criado na plataforma Neon.")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         if "BucketAlreadyOwnedByYou" in str(e) or "BucketAlreadyExists" in str(e):
             print(f"O bucket '{bucket}' já existe e está pronto para uso.")
         else:
