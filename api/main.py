@@ -74,3 +74,27 @@ async def get_recent_alerts(status: str = "PENDING", limit: int = 50):
         records = await conn.fetch(query, status, limit)
         
     return [dict(record) for record in records]
+
+@app.get("/api/v1/alerts/{transaction_id}", response_model=AlertResponse)
+async def get_alert_detail(transaction_id: str):
+    """
+    Retorna os dados do evento e justificativa do score de uma transação específica.
+    """
+    if not db_pool:
+        raise HTTPException(status_code=500, detail="Database connection pool is not initialized")
+        
+    query = """
+        SELECT alert_id, transaction_id, account_id, customer_id, amount,
+               risk_score, risk_level, fraud_reason, status, operator_notes,
+               event_time, created_at, updated_at
+        FROM operational.operational_alerts
+        WHERE transaction_id = $1
+    """
+    
+    async with db_pool.acquire() as conn:
+        record = await conn.fetchrow(query, transaction_id)
+        
+    if not record:
+        raise HTTPException(status_code=404, detail="Alert not found")
+        
+    return dict(record)
