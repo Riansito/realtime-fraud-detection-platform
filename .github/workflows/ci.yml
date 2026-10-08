@@ -62,6 +62,9 @@ jobs:
           POSTGRES_DB: fraud_detection
           POSTGRES_SCHEMA: public
         run: |
+          export PGPASSWORD=postgres_password
+          psql -h localhost -U postgres -d fraud_detection -c "CREATE SCHEMA IF NOT EXISTS silver;"
+          psql -h localhost -U postgres -d fraud_detection -c "CREATE TABLE silver.transactions (transaction_id VARCHAR, account_id VARCHAR, customer_id VARCHAR, merchant_id VARCHAR, merchant_category VARCHAR, amount FLOAT, currency VARCHAR, payment_method VARCHAR, device_id VARCHAR, ip_address VARCHAR, region VARCHAR, event_time TIMESTAMP, kafka_offset BIGINT, bronze_ingestion_date DATE, risk_score FLOAT, is_fraud_suspect BOOLEAN, fraud_reason VARCHAR, processed_at TIMESTAMP, event_date DATE);"
           cd analytics
           dbt deps
           # We run dbt debug to ensure connection works, 
