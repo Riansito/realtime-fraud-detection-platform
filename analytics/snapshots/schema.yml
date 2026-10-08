@@ -1,0 +1,44 @@
+version: 2
+
+snapshots:
+  - name: dim_customer
+    description: "SCD Type 2 snapshot da dimensão de clientes."
+    columns:
+      - name: customer_sk
+        description: "Surrogate key gerada no snapshot (MD5 hash do customer_id + dbt_valid_from)."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Business key."
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: risk_profile
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Low', 'Medium', 'High', 'Critical']
+
+  - name: dim_account
+    description: "SCD Type 2 snapshot da dimensão de contas."
+    columns:
+      - name: account_sk
+        description: "Surrogate key gerada no snapshot (MD5 hash do account_id + dbt_valid_from)."
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: "Business key."
+        tests:
+          - not_null
+      - name: account_type
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Active', 'Suspended', 'Closed']

@@ -1,7 +1,7 @@
 import os
 import json
 import asyncio
-import logging
+import structlog
 from aiokafka import AIOKafkaConsumer
 import asyncpg
 from dotenv import load_dotenv
@@ -10,8 +10,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Logging config
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger("alerts-worker")
+structlog.configure(
+    processors=[
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.JSONRenderer()
+    ]
+)
+logger = structlog.get_logger("alerts-worker")
 
 # Kafka configs
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
@@ -39,7 +45,7 @@ async def get_db_pool():
     )
 
 async def consume_alerts():
-    logger.info(f"Connecting to Kafka at {KAFKA_BOOTSTRAP_SERVERS}...")
+    logger.info("connecting_kafka", bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS)
     consumer = AIOKafkaConsumer(
         KAFKA_TOPIC_FRAUD_ALERTS,
         bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
@@ -54,7 +60,7 @@ async def consume_alerts():
     pool = await get_db_pool()
     
     try:
-        logger.info(f"Listening for alerts on topic '{KAFKA_TOPIC_FRAUD_ALERTS}'...")
+        logger.info("listening_alerts", topic=KAFKA_TOPIC_FRAUD_ALERTS)
         async for msg in consumer:
             payload = msg.value
             
@@ -70,7 +76,7 @@ async def consume_alerts():
             fraud_reason = payload.get("fraud_reason", "Score exceeded threshold")
             event_time = payload.get("event_time")
             
-            logger.info(f"Received alert for transaction {transaction_id} with score {risk_score}")
+            logger.info("received_alert", transaction_id=transaction_id, risk_score=risk_score)
             
             # Insert into operational.operational_alerts
             query = """
@@ -98,13 +104,13 @@ async def consume_alerts():
                     
                     # Commit offset manually after successful processing
                     await consumer.commit()
-                    logger.info(f"Successfully processed and committed alert for {transaction_id}")
+                    logger.info("processed_alert", transaction_id=transaction_id)
                 except Exception as e:
-                    logger.error(f"Failed to process alert for {transaction_id}: {e}")
+                    logger.error("process_alert_failed", transaction_id=transaction_id, error=str(e))
                     # In a real system, you might send to a DLQ or retry
                     
     finally:
-        logger.info("Closing Kafka consumer and DB pool...")
+        logger.info("closing_connections")
         await consumer.stop()
         await pool.close()
 
