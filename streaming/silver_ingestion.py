@@ -1,7 +1,17 @@
 import os
+import structlog
 from pyspark.sql.functions import col, from_json, when, lit, current_timestamp, hour
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, TimestampType
 from session import get_spark_session
+
+structlog.configure(
+    processors=[
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.JSONRenderer()
+    ]
+)
+logger = structlog.get_logger("silver-ingestion")
 
 BRONZE_PATH = os.getenv("S3_BRONZE_PATH", "s3a://lakehouse/bronze/transactions/")
 DLQ_PATH = os.getenv("S3_DLQ_PATH", "s3a://lakehouse/dlq/transactions/")
@@ -31,7 +41,7 @@ def process_silver_stream():
     """
     spark = get_spark_session("SilverIngestion")
     
-    print(f"Reading Bronze stream from {BRONZE_PATH}")
+    logger.info("reading_bronze_stream", path=BRONZE_PATH)
     
     # Lendo o Delta Lake Bronze como um Stream
     bronze_stream = spark.readStream \
@@ -175,10 +185,10 @@ def write_silver_stream(silver_stream_df):
                 # Kafka exige chave (key) e valor (value) em String/Binary
                 kafka_alerts = alerts_df.select(
                     col("transaction_id").alias("key"), # Usa transaction_id como Partition Key
-                    to_json(struct("*")).alias("value") # Todo o row formatado como JSON
+                    col("to_json(struct(*))").alias("value") # Todo o row formatado como JSON
                 )
                 
-                print(f"Publishing {alerts_df.count()} fraud alerts to topic '{ALERTS_TOPIC}'...")
+                logger.info("publishing_fraud_alerts", count=alerts_df.count(), topic=ALERTS_TOPIC)
                 kafka_alerts.write \
                     .format("kafka") \
                     .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
@@ -196,7 +206,7 @@ def write_silver_stream(silver_stream_df):
                 .save(DLQ_PATH)
                 
     # Inicializa o gatilho da stream
-    print("Starting Silver & DLQ write streams...")
+    logger.info("starting_silver_write_streams")
     query = silver_stream_df.writeStream \
         .foreachBatch(route_batch) \
         .outputMode("append") \
@@ -214,4 +224,4 @@ if __name__ == "__main__":
     query = write_silver_stream(silver_df)
     query.awaitTermination()
     
-    print("Silver stream Pipeline (Schema Enforcement -> DLQ -> Watermark -> Deduplication -> Write) Configured Successfully!")
+    logger.info("silver_stream_pipeline_configured")

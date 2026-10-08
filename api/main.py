@@ -5,10 +5,20 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
+import structlog
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 
 load_dotenv()
+
+structlog.configure(
+    processors=[
+        structlog.processors.add_log_level,
+        structlog.processors.TimeStamper(fmt="iso"),
+        structlog.processors.JSONRenderer()
+    ]
+)
+logger = structlog.get_logger("api-main")
 
 DB_HOST = os.getenv("POSTGRES_HOST", "localhost")
 DB_PORT = os.getenv("POSTGRES_PORT", "5432")
@@ -66,8 +76,10 @@ async def lifespan(app: FastAPI):
         database=DB_NAME,
         ssl=ssl_context
     )
+    logger.info("db_pool_initialized")
     yield
     await db_pool.close()
+    logger.info("db_pool_closed")
 
 app = FastAPI(title="Fraud Detection Operational API", lifespan=lifespan)
 
