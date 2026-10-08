@@ -12,7 +12,7 @@ Uso: python scripts/generate_seeds.py
 
 import csv
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 SEEDS_DIR = Path(__file__).resolve().parent.parent / "analytics" / "seeds"
@@ -70,7 +70,7 @@ def main():
           accounts)
 
     merchants = []
-    base = datetime(2018, 1, 1)
+    base = datetime(2018, 1, 1, tzinfo=timezone.utc)
     for n in range(1000, 10000):
         cat = CATEGORIES[n % len(CATEGORIES)]
         name = f"{cat.title()} {rng.choice(MERCHANT_WORDS)} {n}"
