@@ -63,7 +63,7 @@ CITIES = [
     ("Recife", "PE", "81"),
     ("Brasília", "DF", "61"),
 ]
-# Mesmas categorias do producer
+# Same categories as the producer
 CATEGORIES = [
     "RETAIL",
     "FOOD",

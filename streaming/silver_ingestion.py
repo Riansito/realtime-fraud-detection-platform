@@ -35,7 +35,7 @@ DLQ_PATH = os.getenv("S3_DLQ_PATH", "s3a://lakehouse/dlq/transactions/")
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 ALERTS_TOPIC = os.getenv("KAFKA_ALERTS_TOPIC", "fraud_alerts")
 
-# Schema Enforcement rigoroso para os dados contidos no JSON da Camada Bronze
+# Strict Schema Enforcement for the JSON data in the Bronze Layer
 payload_schema = StructType(
     [
         StructField("transaction_id", StringType(), False),
@@ -63,10 +63,10 @@ def process_silver_stream():
 
     logger.info("reading_bronze_stream", path=BRONZE_PATH)
 
-    # Lendo o Delta Lake Bronze como um Stream
+    # Reading the Bronze Delta Lake as a Stream
     bronze_stream = spark.readStream.format("delta").load(BRONZE_PATH)
 
-    # Faz o parsing do raw_payload JSON usando o Schema Enforcement estrito
+    # Parsing the raw_payload JSON using strict Schema Enforcement
     parsed_df = bronze_stream.withColumn(
         "data", from_json(col("raw_payload"), payload_schema)
     ).select(
@@ -78,7 +78,7 @@ def process_silver_stream():
         col("ingestion_date").alias("bronze_ingestion_date"),
     )
 
-    # Validação estrutural: Adiciona flag e motivo de falha para direcionamento à DLQ
+    # Structural validation: Adds flag and failure reason for DLQ routing
     validated_df = parsed_df.withColumn(
         "is_valid",
         when(
@@ -98,26 +98,26 @@ def process_silver_stream():
         .otherwise(lit(None)),
     )
 
-    # Aplica Watermarking de 10 minutos baseado no horário do evento (event_time)
-    # Fundamental para limpar o estado (State) da memória na próxima etapa de Deduplicação
+    # Applies 10-minute Watermarking based on event_time
+    # Essential for clearing state memory in the next Deduplication step
     watermarked_df = validated_df.withWatermark("event_time", "10 minutes")
 
-    # Deduplicação Semântica (Stateful Operation protegida pelo Watermark)
-    # Garante que, se o produtor ou o Kafka reenviarem a mesma mensagem dentro de 10 minutos, ela será descartada.
+    # Semantic Deduplication (Stateful Operation protected by Watermark)
+    # Ensures that if the producer or Kafka resends the same message within 10 minutes, it is discarded.
     deduplicated_df = watermarked_df.dropDuplicates(["transaction_id", "event_time"])
 
     # =========================================================================
-    # ENGINE DE FRAUDE (FAST PATH)
+    # FRAUD ENGINE (FAST PATH)
     # =========================================================================
-    # Cálculo Consolidado de Score (BACK-023)
+    # Consolidated Score Calculation (BACK-023)
 
-    # Extrai a hora do evento para a Heurística Noturna
+    # Extracts the event hour for the Nighttime Heuristic
     risk_df = deduplicated_df.withColumn("event_hour", hour(col("event_time")))
 
-    # Categorias de alto risco
+    # High-risk categories
     suspicious_categories = ["crypto", "jewelry", "gambling"]
 
-    # Definição de Pesos Parciais (Weights)
+    # Partial Weights Definition
     base_risk = lit(0.05)
     score_value = when(col("amount") > 5000, 0.40).otherwise(0.0)
     score_time = when(
@@ -127,7 +127,7 @@ def process_silver_stream():
         col("merchant_category").isin(suspicious_categories), 0.30
     ).otherwise(0.0)
 
-    # Soma dos Pesos
+    # Sum of Weights
     from pyspark.sql.functions import least
 
     total_score = base_risk + score_value + score_time + score_category
@@ -135,11 +135,11 @@ def process_silver_stream():
     risk_df = (
         risk_df.withColumn(
             "risk_score",
-            least(total_score, lit(1.0)),  # Limita o score máximo a 1.0 (100%)
+            least(total_score, lit(1.0)),  # Limits the maximum score to 1.0 (100%)
         )
         .withColumn(
             "is_fraud_suspect",
-            col("risk_score") >= 0.70,  # Flag acende se passar de 70%
+            col("risk_score") >= 0.70,  # Flag triggers if it exceeds 70%
         )
         .withColumn(
             "fraud_reason",
@@ -150,7 +150,7 @@ def process_silver_stream():
         )
         .withColumn("processed_at", current_timestamp())
         .drop("event_hour")
-    )  # Remove a coluna temporária
+    )  # Removes the temporary column
 
     return risk_df
 
@@ -167,12 +167,12 @@ def write_silver_stream(silver_stream_df):
     """
 
     def route_batch(batch_df, batch_id):
-        # O Spark chama essa função a cada 10 segundos com um lote estático (DataFrame)
+        # Spark calls this function every 10 seconds with a static batch (DataFrame)
 
-        # 1. Rota de Sucesso (Valid Data)
+        # 1. Success Route (Valid Data)
         valid_df = batch_df.filter(col("is_valid") == True).drop(
             "is_valid", "dlq_reason", "raw_payload"
-        )  # Limpamos colunas de debug
+        )  # Clean debug columns
 
         if not valid_df.isEmpty():
             # --- DATA QUALITY ASSERTS (BACK-038) ---
@@ -191,11 +191,11 @@ def write_silver_stream(silver_stream_df):
                 f"Data Quality Error: Found {invalid_currencies} rows with invalid currency in Silver!"
             )
 
-            # Cria a coluna event_date (DATE no Postgres)
+            # Creates the event_date column (DATE in Postgres)
             valid_df = valid_df.withColumn("event_date", to_date(col("event_time")))
 
             # --- ENGINE DE FRAUDE: Regra 3 (BACK-021) - Heurística de Alta Velocidade ---
-            # Avalia ataques de força bruta contando o número de transações da mesma conta neste micro-lote
+            # Evaluates brute force attacks by counting the number of transactions da mesma conta neste micro-lote
             from pyspark.sql.functions import count as spark_count
             from pyspark.sql.functions import least
             from pyspark.sql.window import Window
@@ -205,7 +205,7 @@ def write_silver_stream(silver_stream_df):
                 "tx_count_batch", spark_count("transaction_id").over(window_spec)
             )
 
-            # Adiciona o peso altíssimo de Velocidade ao Score Consolidado
+            # Adds high Velocity weight to the Score Consolidado
             velocity_score = when(col("tx_count_batch") >= 3, 0.50).otherwise(0.0)
 
             valid_df = (
@@ -228,9 +228,9 @@ def write_silver_stream(silver_stream_df):
                     ).otherwise(col("fraud_reason")),
                 )
                 .drop("tx_count_batch")
-            )  # Limpa a coluna temporária
+            )  # Clean temporary column
 
-            # Salva no DW (Postgres) via JDBC para alimentar a camada Silver
+            # Saves to DW (Postgres) via JDBC to feed the Silver layer
             jdbc_url = f"jdbc:postgresql://{os.getenv('POSTGRES_HOST', 'localhost')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB', 'postgres')}?sslmode={os.getenv('POSTGRES_SSLMODE', 'require')}&stringtype=unspecified"
 
             valid_df.write.format("jdbc").option("url", jdbc_url).option(
@@ -240,19 +240,19 @@ def write_silver_stream(silver_stream_df):
             ).option("driver", "org.postgresql.Driver").mode("append").save()
 
             # --- ENGINE DE FRAUDE: Publicação de Alertas em Tempo Real (BACK-024) ---
-            # Se identificamos fraude (is_fraud_suspect == True), não esperamos o dbt/Gold Layer.
-            # Disparamos um evento imediato de volta para o Kafka para a API atuar e bloquear.
+            # If fraud is suspected, we don't wait for dbt/Gold Layer.
+            # Fire an immediate event back to Kafka para a API atuar e bloquear.
             alerts_df = valid_df.filter(col("is_fraud_suspect") == True)
 
             if not alerts_df.isEmpty():
-                # Kafka exige chave (key) e valor (value) em String/Binary
+                # Kafka requires key and value in String/Binary
                 kafka_alerts = alerts_df.select(
                     col("transaction_id").alias(
                         "key"
-                    ),  # Usa transaction_id como Partition Key
+                    ),  # Uses transaction_id as Partition Key
                     to_json(struct(*alerts_df.columns)).alias(
                         "value"
-                    ),  # Todo o row formatado como JSON
+                    ),  # Entire row formatted as JSON
                 )
 
                 logger.info(
@@ -264,7 +264,7 @@ def write_silver_stream(silver_stream_df):
                     "kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS
                 ).option("topic", ALERTS_TOPIC).save()
 
-        # 2. Rota de Falha (Dead Letter Queue)
+        # 2. Failure Route (Dead Letter Queue)
         invalid_df = batch_df.filter(col("is_valid") == False)
 
         if not invalid_df.isEmpty():
@@ -272,7 +272,7 @@ def write_silver_stream(silver_stream_df):
                 "bronze_ingestion_date"
             ).save(DLQ_PATH)
 
-    # Inicializa o gatilho da stream
+    # Initializes the stream trigger
     logger.info("starting_silver_write_streams")
     query = (
         silver_stream_df.writeStream.foreachBatch(route_batch)
@@ -286,10 +286,10 @@ def write_silver_stream(silver_stream_df):
 
 
 if __name__ == "__main__":
-    # Pipeline Completo da Camada Silver
+    # Full Silver Layer Pipeline
     silver_df = process_silver_stream()
 
-    # Iniciar testes locais
+    # Start local tests
     query = write_silver_stream(silver_df)
     query.awaitTermination()
 

@@ -17,7 +17,7 @@ def read_kafka_stream():
 
     print(f"Reading from Kafka at {KAFKA_BOOTSTRAP_SERVERS}, topic: {KAFKA_TOPIC}")
 
-    # Leitura em formato streaming nativa do Kafka
+    # Native streaming read from Kafka
     df = (
         spark.readStream.format("kafka")
         .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS)
@@ -27,8 +27,8 @@ def read_kafka_stream():
         .load()
     )
 
-    # Transformação de dados de byte-array para String e formatação de acordo
-    # com o `bronze_schema` do 02-data-modeling.md
+    # Transform data from byte-array to String and format according to
+    # the `bronze_schema` from 02-data-modeling.md
     bronze_df = (
         df.select(
             col("key").cast(StringType()).alias("kafka_key"),
@@ -59,7 +59,7 @@ def write_bronze_stream(bronze_df):
     """
     print(f"Writing Bronze stream to {BRONZE_PATH}")
 
-    # Inicia a escrita contínua (Streaming) com Checkpointing no S3
+    # Start continuous streaming with Checkpointing on S3
     query = (
         bronze_df.writeStream.format("delta")
         .outputMode("append")
@@ -73,11 +73,11 @@ def write_bronze_stream(bronze_df):
 
 
 if __name__ == "__main__":
-    # Teste unitário manual do fluxo de leitura e escrita
+    # Main execution block
     bronze_stream_df = read_kafka_stream()
     print("Bronze stream read logic created successfully.")
 
-    # Inicia a escrita (bloqueia o terminal enquanto escuta o stream)
+    # Start writing (blocks terminal while listening to stream)
     query = write_bronze_stream(bronze_stream_df)
 
     # bronze_stream_df.printSchema()

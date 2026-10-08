@@ -84,7 +84,7 @@ async def consume_alerts():
             fraud_reason = payload.get("fraud_reason", "Score exceeded threshold")
             event_time = payload.get("event_time")
             if isinstance(event_time, str):
-                # Spark serializa como ISO-8601 com 'Z'; asyncpg exige datetime
+                # Spark serializes as ISO-8601 with 'Z'; asyncpg requires datetime
                 event_time = datetime.fromisoformat(event_time.replace("Z", "+00:00"))
 
             logger.info(

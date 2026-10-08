@@ -21,29 +21,29 @@ with DAG(
     catchup=False,
     tags=["dbt", "analytics", "gold"],
 ) as dag:
-    # Comando para rodar os seeds
+    # Command to run seeds
     dbt_seed = BashOperator(
         task_id="dbt_seed",
         bash_command="dbt seed --project-dir /opt/airflow/analytics --profiles-dir /opt/airflow/analytics",
     )
 
-    # Comando para rodar os snapshots
+    # Command to run snapshots
     dbt_snapshot = BashOperator(
         task_id="dbt_snapshot",
         bash_command="dbt snapshot --project-dir /opt/airflow/analytics --profiles-dir /opt/airflow/analytics",
     )
 
-    # Comando para rodar os modelos
+    # Command to run models
     dbt_run = BashOperator(
         task_id="dbt_run",
         bash_command="dbt run --project-dir /opt/airflow/analytics --profiles-dir /opt/airflow/analytics",
     )
 
-    # Comando para testar a qualidade dos dados (testes)
+    # Command to test data quality (tests)
     dbt_test = BashOperator(
         task_id="dbt_test",
         bash_command="dbt test --project-dir /opt/airflow/analytics --profiles-dir /opt/airflow/analytics",
     )
 
-    # Fluxo de execução
+    # Execution flow
     dbt_seed >> dbt_snapshot >> dbt_run >> dbt_test
