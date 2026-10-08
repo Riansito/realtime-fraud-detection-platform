@@ -44,6 +44,12 @@ class CustomerRiskProfile(BaseModel):
     valid_to: Optional[datetime]
     is_current: Optional[bool]
 
+class FraudMetrics(BaseModel):
+    total_transactions: int
+    total_suspected_fraud: int
+    fraud_rate_percentage: float
+    total_fraud_amount: float
+
 # Database connection pool reference
 db_pool = None
 
@@ -164,3 +170,35 @@ async def get_customer_risk_profile(customer_id: str):
         raise HTTPException(status_code=404, detail="Customer not found in analytics layer")
         
     return [dict(record) for record in records]
+
+@app.get("/api/v1/analytics/metrics/fraud-rate", response_model=FraudMetrics)
+async def get_fraud_metrics():
+    """
+    Calcula e retorna as métricas globais agregadas da tabela fato (Gold).
+    """
+    if not db_pool:
+        raise HTTPException(status_code=500, detail="Database connection pool is not initialized")
+        
+    query = """
+        SELECT 
+            COUNT(*) as total_transactions,
+            COUNT(*) FILTER (WHERE is_fraud_suspect = TRUE) as total_suspected_fraud,
+            COALESCE(SUM(amount) FILTER (WHERE is_fraud_suspect = TRUE), 0) as total_fraud_amount
+        FROM gold.fact_transactions
+    """
+    
+    async with db_pool.acquire() as conn:
+        record = await conn.fetchrow(query)
+        
+    total_transactions = record['total_transactions'] or 0
+    total_suspected = record['total_suspected_fraud'] or 0
+    total_amount = float(record['total_fraud_amount'] or 0)
+    
+    fraud_rate = (total_suspected / total_transactions * 100.0) if total_transactions > 0 else 0.0
+    
+    return FraudMetrics(
+        total_transactions=total_transactions,
+        total_suspected_fraud=total_suspected,
+        fraud_rate_percentage=round(fraud_rate, 2),
+        total_fraud_amount=total_amount
+    )
